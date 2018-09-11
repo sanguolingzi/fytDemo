@@ -15,6 +15,6 @@
 
 
     <select id="testSelect" parameterType="java.util.Map" resultType="java.util.Map">
-        select * from fyt_user;
+        select * from fyt_user
     </select>
 </mapper>

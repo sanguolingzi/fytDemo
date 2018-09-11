@@ -1,5 +1,6 @@
 package fyt.business.controller;
 
+import fyt.business.model.TestModel;
 import fyt.business.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,12 @@ public class TestController {
     @ResponseBody
     public Object test(){
         return testServiceImpl.testSelect(new HashMap<>());
+    }
+
+    @RequestMapping(value="testPage")
+    @ResponseBody
+    public Object testPage(TestModel testModel){
+        return testServiceImpl.testPageSelect(testModel);
     }
 
 
