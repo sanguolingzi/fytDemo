@@ -144,6 +144,12 @@
             <version>${mybatis.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>4.1.6</version>
+        </dependency>
+
         <!-- 添加mybatis/spring整合包依赖 -->
         <dependency>
             <groupId>org.mybatis</groupId>

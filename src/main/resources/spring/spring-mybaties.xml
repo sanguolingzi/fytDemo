@@ -65,7 +65,7 @@
         <property name="mapperLocations" value="classpath:mapping/*.xml"></property>
         <property name="plugins">
             <array>
-                <bean class="com.github.pagehelper.PageInterceptor">
+                <bean class="com.github.pagehelper.PageHelper">
                     <property name="properties">
                         <value>
                             helperDialect=mysql
