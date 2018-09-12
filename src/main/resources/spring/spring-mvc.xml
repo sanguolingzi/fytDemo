@@ -53,5 +53,8 @@
             <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
         </mvc:message-converters>
+        <mvc:return-value-handlers>
+            <bean class="fyt.business.core.handler.BusinessReturnValueHandler"></bean>
+        </mvc:return-value-handlers>
     </mvc:annotation-driven>
 </beans>

@@ -1,5 +1,7 @@
 package fyt.business.controller;
 
+import fyt.business.core.annotation.JSON;
+import fyt.business.core.annotation.ResultBeanResponseBody;
 import fyt.business.model.TestModel;
 import fyt.business.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ public class TestController {
 
 
     @RequestMapping(value="json")
-    @ResponseBody
+    @ResultBeanResponseBody
     public Object test(){
         return testServiceImpl.testSelect(new HashMap<>());
     }
