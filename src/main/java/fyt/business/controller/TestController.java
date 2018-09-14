@@ -1,6 +1,5 @@
 package fyt.business.controller;
 
-import fyt.business.core.annotation.JSON;
 import fyt.business.core.annotation.ResultBeanResponseBody;
 import fyt.business.model.TestModel;
 import fyt.business.service.TestService;
@@ -19,7 +18,7 @@ public class TestController {
     @Autowired
     private TestService testServiceImpl;
 
-    @RequestMapping(value="index")
+    @RequestMapping(value="index.do")
     public ModelAndView test(ModelAndView mv){
         mv.addObject("list",testServiceImpl.testSelect(new HashMap<>()));
         System.out.println("here");
@@ -28,7 +27,7 @@ public class TestController {
     }
 
 
-    @RequestMapping(value="json")
+    @RequestMapping(value="json.do")
     @ResultBeanResponseBody
     public Object test(){
         return testServiceImpl.testSelect(new HashMap<>());
@@ -41,7 +40,7 @@ public class TestController {
     }
 
 
-    @RequestMapping(value="testInsert")
+    @RequestMapping(value="testInsert.do")
     public String testInsert(){
         testServiceImpl.testInsert("李斯");
         System.out.println("testInsert");
@@ -49,7 +48,7 @@ public class TestController {
     }
 
 
-    @RequestMapping(value="testUpdate")
+    @RequestMapping(value="testUpdate.do")
     public String testUpdate(){
         testServiceImpl.testUpdate("李三",3);
         System.out.println("testUpdate");
