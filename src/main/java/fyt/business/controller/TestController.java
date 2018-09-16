@@ -20,7 +20,7 @@ public class TestController {
 
     @RequestMapping(value="index.do")
     public ModelAndView test(ModelAndView mv){
-        mv.addObject("list",testServiceImpl.testSelect(new HashMap<>()));
+        mv.addObject("list",testServiceImpl.testSelect(new HashMap()));
         System.out.println("here");
         mv.setViewName("abcd");
         return mv;
@@ -30,7 +30,7 @@ public class TestController {
     @RequestMapping(value="json.do")
     @ResultBeanResponseBody
     public Object test(){
-        return testServiceImpl.testSelect(new HashMap<>());
+        return testServiceImpl.testSelect(new HashMap());
     }
 
     @RequestMapping(value="testPage")
