@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="fytDemo:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="fytDemo.war">
+      <element id="artifact" artifact-name="fytDemo:war exploded" />
+    </root>
+  </artifact>
+</component>
