@@ -4,11 +4,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                         http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
                         ">
-    <!--
-    <bean id="myProducer" class="fyt.business.core.manager.rocketmq.RocketMqProducer"
+    <bean id="userProducer" class="fyt.business.core.manager.rocketmq.user.UserProducer"
           init-method="init" destroy-method="destroy">
-        <property name="producerGroup" value="MyProducerGroup"/>
-        <property name="namesrvAddr" value="127.0.0.1:9876"/>
+        <property name="producerGroup" value="${rocketmq.producerGroup}"/>
+        <property name="namesrvAddr" value="${rocketmq.namesrvAddr}"/>
+        <property name="topic" value="${rocketmq.user.topic}"/>
+        <property name="tags" value="${rocketmq.user.tags}"/>
     </bean>
-    -->
 </beans>

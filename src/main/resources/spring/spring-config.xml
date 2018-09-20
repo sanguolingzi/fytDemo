@@ -24,6 +24,7 @@
             <list>
                 <value>classpath:jdbc.properties</value>
                 <value>classpath:/redisConfig/redis.properties</value>
+                <value>classpath:/rocketmq/rocketmq.properties</value>
             </list>
         </property>
     </bean>

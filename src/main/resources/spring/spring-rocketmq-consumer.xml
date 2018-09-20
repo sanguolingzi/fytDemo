@@ -4,11 +4,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                         http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
                         ">
-    <!--
-    <bean id="myConsumer" class="fyt.business.core.manager.rocketmq.RocketMqConsumer"
+    <bean id="userConsumer" class="fyt.business.core.manager.rocketmq.user.UserConsumer"
         init-method="init" destroy-method="destroy">
-        <property name="consumerGroup" value="MyConsumerGroup"/>
-        <property name="namesrvAddr" value="127.0.0.1:9876"/>
+        <property name="consumerGroup" value="${rocketmq.consumerGroup}"/>
+        <property name="namesrvAddr" value="${rocketmq.namesrvAddr}"/>
+        <property name="topic" value="${rocketmq.user.topic}"/>
+        <property name="tags" value="${rocketmq.user.tags}"/>
     </bean>
-    -->
+
 </beans>

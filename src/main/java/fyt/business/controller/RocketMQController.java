@@ -1,7 +1,7 @@
 package fyt.business.controller;
 
 
-import fyt.business.core.manager.rocketmq.RocketMqProducer;
+import fyt.business.core.manager.rocketmq.user.UserProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class RocketMQController {
 
     @Autowired(required = false)
-    private RocketMqProducer myProducer;
+    private UserProducer userProducer;
 
 
     @RequestMapping(value="sendMsg.do")
     public String test(){
-        myProducer.sendMessage("测试消息！");
+        userProducer.sendMessage("测试消息！");
         return "success";
     }
 }

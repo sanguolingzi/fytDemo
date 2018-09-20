@@ -7,7 +7,6 @@ import com.alibaba.rocketmq.client.consumer.listener.MessageListenerConcurrently
 import com.alibaba.rocketmq.client.exception.MQClientException;
 import com.alibaba.rocketmq.common.consumer.ConsumeFromWhere;
 import com.alibaba.rocketmq.common.message.MessageExt;
-import com.alibaba.rocketmq.common.protocol.heartbeat.MessageModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,14 +16,17 @@ public class RocketMqConsumer {
 
     private final Logger logger = LoggerFactory.getLogger(RocketMqConsumer.class);
 
-    private DefaultMQPushConsumer defaultMQPushConsumer;
+    public DefaultMQPushConsumer defaultMQPushConsumer;
     private String namesrvAddr;
     private String consumerGroup;
+    public String topic;
+    public String tags;
+
 
     /**
      * Spring bean init-method
      */
-    public void init() throws InterruptedException, MQClientException {
+    public void initData() throws InterruptedException, MQClientException {
 
         // 参数信息
         logger.info("DefaultMQPushConsumer initialize!");
@@ -39,39 +41,11 @@ public class RocketMqConsumer {
 
         // 订阅指定MyTopic下tags等于MyTag
 
-        defaultMQPushConsumer.subscribe("MyTopic", "MyTag");
+        defaultMQPushConsumer.subscribe(topic, tags);
 
         // 设置Consumer第一次启动是从队列头部开始消费还是队列尾部开始消费<br>
         // 如果非第一次启动，那么按照上次消费的位置继续消费
         defaultMQPushConsumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
-
-        // 设置为集群消费(区别于广播消费)
-        defaultMQPushConsumer.setMessageModel(MessageModel.CLUSTERING);
-
-        defaultMQPushConsumer.registerMessageListener(new MessageListenerConcurrently() {
-
-            // 默认msgs里只有一条消息，可以通过设置consumeMessageBatchMaxSize参数来批量接收消息
-            @Override
-            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
-
-                MessageExt msg = msgs.get(0);
-                if (msg.getTopic().equals("MyTopic")) {
-                    // TODO 执行Topic的消费逻辑
-                    System.out.println("-----msg----"+msg.toString());
-
-
-                    if (msg.getTags() != null && msg.getTags().equals("MyTag")) {
-                        // TODO 执行Tag的消费
-                        System.out.println("-----msg.getTags----"+msg.getTags());
-                    }
-                }
-                // 如果没有return success ，consumer会重新消费该消息，直到return success
-                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
-            }
-        });
-
-        // Consumer对象在使用之前必须要调用start初始化，初始化一次即可<br>
-        defaultMQPushConsumer.start();
 
         logger.info("DefaultMQPushConsumer start success!");
     }
@@ -93,7 +67,13 @@ public class RocketMqConsumer {
         this.consumerGroup = consumerGroup;
     }
 
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
 
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
 
     public static void main(String[] args) throws Exception{
 

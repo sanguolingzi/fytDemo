@@ -11,10 +11,11 @@ public class RocketMqProducer {
 
     private final Logger logger = LoggerFactory.getLogger(RocketMqProducer.class);
 
-    private DefaultMQProducer defaultMQProducer;
+    public DefaultMQProducer defaultMQProducer;
     private String producerGroup;
     private String namesrvAddr;
-
+    public String topic;
+    public String tags;
     /**
      * Spring bean init-method
      */
@@ -56,22 +57,16 @@ public class RocketMqProducer {
         this.namesrvAddr = namesrvAddr;
     }
 
-    public void sendMessage( String text) {
-        Message msg = new Message("MyTopic","MyTag", text.getBytes());
-        SendResult sendResult = null;
-        try {
-            sendResult = defaultMQProducer.send(msg);
-            System.out.println("Rule MSG_ID:"+sendResult.getMsgId());
-            logger.info("Rule MSG_ID:"+sendResult.getMsgId());
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage() + String.valueOf(sendResult));
-        }
-        // 当消息发送失败时如何处理
-        if (sendResult == null) {
-            // TODO
-            System.out.println("-----发送失败--------");
-        }
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public void sendMessage(String text) {
+        //由子类实现
     }
 
 
