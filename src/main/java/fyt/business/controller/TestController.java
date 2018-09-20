@@ -4,7 +4,6 @@ import fyt.business.core.annotation.ResultBeanResponseBody;
 import fyt.business.model.TestModel;
 import fyt.business.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,16 +18,11 @@ public class TestController {
     @Autowired
     private TestService testServiceImpl;
 
-    @Autowired
-    private RedisTemplate redisTemplate;
-
     @RequestMapping(value="index.do")
     public ModelAndView test(ModelAndView mv){
         mv.addObject("list",testServiceImpl.testSelect(new HashMap()));
         System.out.println("here");
         mv.setViewName("abcd");
-
-        redisTemplate.opsForValue().set("你好","我的天");
         return mv;
     }
 

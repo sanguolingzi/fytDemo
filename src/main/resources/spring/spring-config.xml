@@ -13,7 +13,7 @@
     <!--启用spring的一些annotation -->
     <context:annotation-config/>
 
-    <context:component-scan base-package="fyt.business.service">
+    <context:component-scan base-package="fyt.business">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
     </context:component-scan>
 
