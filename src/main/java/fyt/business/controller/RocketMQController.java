@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("rocketmq")
 public class RocketMQController {
 
-    @Autowired
+    @Autowired(required = false)
     private RocketMqProducer myProducer;
 
 
