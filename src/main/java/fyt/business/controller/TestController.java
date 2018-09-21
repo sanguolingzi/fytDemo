@@ -1,6 +1,7 @@
 package fyt.business.controller;
 
 import fyt.business.core.annotation.ResultBeanResponseBody;
+import fyt.business.model.MenuNode;
 import fyt.business.model.TestModel;
 import fyt.business.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,23 @@ public class TestController {
         testServiceImpl.testUpdate("李三",3);
         System.out.println("testUpdate");
         return "testUpdate";
+    }
+
+    @RequestMapping("menuSelectAll.do")
+    @ResponseBody
+    public Object menuSelectAll(MenuNode menuNode){
+        return testServiceImpl.menuSelectAll(menuNode);
+    }
+
+    @RequestMapping("menuSelectBy.do")
+    @ResponseBody
+    public Object menuSelectBy(String menu_name,String menu_lastid,MenuNode menuNode){
+        return testServiceImpl.menuSelectBy(menu_name,menu_lastid,menuNode);
+    }
+
+    @RequestMapping("Insert.do")
+    @ResponseBody
+    public Object InsertMenu(String menu_name,String menu_lastname,String menu_location,String menu_state){
+        return  testServiceImpl.menuInsert(menu_name,menu_lastname,menu_location,menu_state);
     }
 }
