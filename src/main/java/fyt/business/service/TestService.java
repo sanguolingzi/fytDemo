@@ -1,5 +1,6 @@
 package fyt.business.service;
 
+import fyt.business.model.MenuNode;
 import fyt.business.model.TestModel;
 import fyt.business.model.base.PageData;
 
@@ -15,4 +16,10 @@ public interface TestService {
     List<Map<String,Object>> testSelect(Map<String,Object> paraMap);
 
     PageData testPageSelect(TestModel testModel);
+
+    PageData menuSelectAll(MenuNode menuNode);
+
+    PageData menuSelectBy(String menu_name,String menu_lastid,MenuNode menuNode);
+
+    int menuInsert(String menu_name,String menu_lastname,String menu_location,String menu_state);
 }

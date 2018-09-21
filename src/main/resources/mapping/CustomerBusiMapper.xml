@@ -17,4 +17,36 @@
     <select id="testSelect" parameterType="java.util.Map" resultType="java.util.Map">
         select * from fyt_user
     </select>
+
+    <select id="menuSelect" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT menu_id,menu_name,menu_lastid,menu_lastname,menu_state from menu where menu_delect=1
+    </select>
+
+    <select id="menuSelectByid" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT menu_id,menu_name,menu_lastid,menu_lastname,menu_state from menu where menu_lastid = #{menu_lastid} and menu_delect=1
+    </select>
+
+    <select id="menuSelectByName" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT menu_id,menu_name,menu_lastid,menu_lastname,menu_state from menu where menu_name like #{menu_name} and menu_delect=1
+    </select>
+
+    <select id="menuSelectBy" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT menu_id,menu_name,menu_lastid,menu_lastname,menu_state from menu where menu_name like #{menu_name} and menu_lastid=#{menu_lastid} and menu_delect=1
+    </select>
+
+    <insert id="menuInsert" parameterType="java.util.Map">
+        INSERT into menu(menu_name,menu_lastid,menu_lastname,menu_location,menu_state,menu_delect) VALUES(#{name},#{lastid},#{lastname},#{location},#{state},1)
+    </insert>
+
+    <update id="menuUpdata" parameterType="java.util.Map">
+        UPDATE menu set menu_name =#{menu_name},menu_location=#{menu_location},menu_state=#{menu_state},menu_lastid=#{menu_lastid},menu_lastname=#{menu_lastname} where menu_id=#{menu_id}
+    </update>
+
+    <update id="menuDelect" parameterType="java.util.Map">
+        UPDATE menu set menu_delect = 0 where menu_id = #{menu_id} or menu_lastid =#{menu_id}
+    </update>
+
+    <select id="selectId" parameterType="String" resultType="int">
+        Select menu_id from menu where menu_name =#{menu_lastname}
+    </select>
 </mapper>
