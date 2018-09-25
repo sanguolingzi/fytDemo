@@ -7,17 +7,15 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 
 @Component
-public class TestExecutor extends BaseExecutor<String> {
+public class TestErrorExecutor extends BaseExecutor<String> {
 
     @Override
     public String exectueBusiness(HttpServletRequest request, BusinessModel businessModel, Object... obj) {
-
         return "asdasdasdasdasdasdasd";
-
     }
 
     public boolean validateParam(HttpServletRequest request, BusinessModel businessModel,Object...obj){
 
-        return false;
+        return true;
     }
 }

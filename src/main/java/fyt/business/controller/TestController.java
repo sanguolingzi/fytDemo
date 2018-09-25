@@ -74,4 +74,8 @@ public class TestController {
     public Object InsertMenu(String menu_name,String menu_lastname,String menu_location,String menu_state){
         return  testServiceImpl.menuInsert(menu_name,menu_lastname,menu_location,menu_state);
     }
+
+
+
+
 }

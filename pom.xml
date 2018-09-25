@@ -150,6 +150,18 @@
             <version>4.1.6</version>
         </dependency>
 
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>1.3.5</version>
+        </dependency>
+
         <!-- 添加mybatis/spring整合包依赖 -->
         <dependency>
             <groupId>org.mybatis</groupId>
