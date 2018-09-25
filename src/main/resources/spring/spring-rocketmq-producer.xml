@@ -11,4 +11,12 @@
         <property name="topic" value="${rocketmq.user.topic}"/>
         <property name="tags" value="${rocketmq.user.tags}"/>
     </bean>
+
+    <bean id="rocketMqTransProducer" class="fyt.business.core.manager.rocketmq.RocketMqTransProducer"
+          init-method="init" destroy-method="destroy">
+        <property name="transGroup" value="${rocketmq.transProducerGroup}"/>
+        <property name="namesrvAddr" value="${rocketmq.namesrvAddr}"/>
+        <property name="topic" value="${rocketmq.trans.topic}"/>
+        <property name="tags" value="${rocketmq.trans.tags}"/>
+    </bean>
 </beans>

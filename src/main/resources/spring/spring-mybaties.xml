@@ -73,12 +73,12 @@
         </property>
     </bean>
 
-    <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+    <!-- DAO接口所在包名，Spring会自动查找其下的类
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="fyt.business.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
     </bean>
-
+    -->
 
     <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -87,4 +87,15 @@
 
     <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- 通用 Mapper -->
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="fyt.business.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+        <property name="properties">
+            <value>
+                mappers=tk.mybatis.mapper.common.Mapper
+            </value>
+        </property>
+    </bean>
 </beans>
