@@ -6,6 +6,15 @@ public class ErrorInfo {
 
     String errorMsg;
 
+    public ErrorInfo(){
+
+    }
+
+    public ErrorInfo(String errorCode,String errorMsg){
+        this.errorCode = errorCode;
+        this.errorMsg = errorMsg;
+    }
+
     public String getErrorCode() {
         return errorCode;
     }

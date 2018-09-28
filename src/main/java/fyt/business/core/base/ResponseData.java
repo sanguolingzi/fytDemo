@@ -6,6 +6,7 @@ public class ResponseData<T> {
 
     ErrorInfo errorInfo;
 
+    ResultInfo resultInfo;
     /**
      * 接口状态
      */
@@ -34,5 +35,13 @@ public class ResponseData<T> {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public ResultInfo getResultInfo() {
+        return resultInfo;
+    }
+
+    public void setResultInfo(ResultInfo resultInfo) {
+        this.resultInfo = resultInfo;
     }
 }
