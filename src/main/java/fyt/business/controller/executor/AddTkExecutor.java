@@ -30,8 +30,4 @@ public class AddTkExecutor extends BaseExecutor<String> {
         return "success";
     }
 
-    public boolean validateParam(HttpServletRequest request, BusinessModel businessModel,Object...obj){
-
-        return false;
-    }
 }

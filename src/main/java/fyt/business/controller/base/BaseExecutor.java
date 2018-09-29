@@ -4,14 +4,24 @@ import fyt.business.core.base.ErrorInfo;
 import fyt.business.core.base.ErrorMessage;
 import fyt.business.core.base.ResponseData;
 import fyt.business.core.base.ResultInfo;
+import fyt.business.core.base.handler.ErrorMessageHandler;
+import fyt.business.core.base.handler.ExceptionHandler;
 import fyt.business.core.constant.BusinessStatus;
 import fyt.business.core.exception.BusinessException;
 import fyt.business.model.base.BusinessModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class BaseExecutor<T> extends AbstractExecutor<T> {
+
+    @Autowired(required = false)
+    private ExceptionHandler exceptionHandler;
+
+    @Autowired(required = false)
+    private ErrorMessageHandler errorMessageHandler;
+
 
     public ResponseData<T> execute(HttpServletRequest request, BusinessModel businessModel, Object...obj){
         ResponseData<T> responseData = new ResponseData();
@@ -22,14 +32,26 @@ public class BaseExecutor<T> extends AbstractExecutor<T> {
                 T t = this.exectueBusiness(request,businessModel,obj);
                 responseData.setData(t);
             }else{
-                 throw new BusinessException(   errorMessage.getErrorInfo().getErrorMsg());
+                 if(errorMessageHandler != null){
+                     ErrorInfo errorInfo = errorMessageHandler.handlerErrorMessage(errorMessage);
+                     responseData.setErrorInfo(errorInfo);
+                 }else{
+                     throw new BusinessException(  errorMessage.getErrorInfo().getErrorMsg());
+                 }
             }
         }catch(Exception e){
-            ErrorInfo errorInfo = new ErrorInfo();
+            ErrorInfo errorInfo = null;
             if(e instanceof BusinessException){
                 //errorInfo.setErrorCode("error");
-                errorInfo.setErrorMsg(((BusinessException)e).getMsg());
+                //自定义的异常信息处理
+                if(exceptionHandler != null){
+                    errorInfo = exceptionHandler.handlerErrorInfo((BusinessException)e);
+                }else{
+                    errorInfo = new ErrorInfo();
+                    errorInfo.setErrorMsg(((BusinessException)e).getMsg());
+                }
             }else{
+                errorInfo = new ErrorInfo();
                 errorInfo.setErrorCode("error");
                 errorInfo.setErrorMsg("系统异常!");
             }

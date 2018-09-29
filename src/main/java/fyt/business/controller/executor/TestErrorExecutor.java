@@ -13,9 +13,4 @@ public class TestErrorExecutor extends BaseExecutor<String> {
     public String exectueBusiness(HttpServletRequest request, BusinessModel businessModel, Object... obj) {
         return "asdasdasdasdasdasdasd";
     }
-
-    public boolean validateParam(HttpServletRequest request, BusinessModel businessModel,Object...obj){
-
-        return true;
-    }
 }

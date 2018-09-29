@@ -26,9 +26,4 @@ public class UpdateTkExecutor extends BaseExecutor<String> {
         testTkServiceImpl.update(testTk);
         return "success";
     }
-
-    public boolean validateParam(HttpServletRequest request, BusinessModel businessModel,Object...obj){
-
-        return false;
-    }
 }

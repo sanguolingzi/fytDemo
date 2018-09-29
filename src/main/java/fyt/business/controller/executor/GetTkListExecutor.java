@@ -20,9 +20,4 @@ public class GetTkListExecutor extends BaseExecutor<Object> {
         TestTk testTk = new TestTk();
         return testTkServiceImpl.selectAll(testTk);
     }
-
-    public boolean validateParam(HttpServletRequest request, BusinessModel businessModel,Object...obj){
-
-        return false;
-    }
 }
