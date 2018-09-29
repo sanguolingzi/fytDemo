@@ -2,14 +2,13 @@ package fyt.business.pojo;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Table(name="fyt_tk")
 public class TestTk {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;
