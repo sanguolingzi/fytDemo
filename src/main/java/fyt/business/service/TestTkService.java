@@ -13,4 +13,6 @@ public interface TestTkService {
     public TestTk selectOne(TestTk testTk);
 
     public List<TestTk> selectAll(TestTk testTk);
+
+    public void testTransaction() throws Exception;
 }
