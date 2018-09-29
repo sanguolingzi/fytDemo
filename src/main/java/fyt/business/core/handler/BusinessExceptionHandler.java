@@ -12,7 +12,7 @@ public class BusinessExceptionHandler implements ExceptionHandler{
     @Override
     public ErrorInfo handlerErrorInfo(BusinessException e) {
         ErrorInfo errorInfo  = new ErrorInfo();
-        errorInfo.setErrorCode("errorCode");
+        errorInfo.setErrorCode(null);
         errorInfo.setErrorMsg(e.getMsg());
         return errorInfo;
     }

@@ -33,10 +33,13 @@ public class BaseExecutor<T> extends AbstractExecutor<T> {
                 responseData.setData(t);
             }else{
                  if(errorMessageHandler != null){
+                     //自定义的业务信息处理
                      ErrorInfo errorInfo = errorMessageHandler.handlerErrorMessage(errorMessage);
                      responseData.setErrorInfo(errorInfo);
+                     responseData.setResultInfo(createError());
+                     return responseData;
                  }else{
-                     throw new BusinessException(  errorMessage.getErrorInfo().getErrorMsg());
+                     throw new BusinessException( errorMessage.getErrorInfo().getErrorMsg());
                  }
             }
         }catch(Exception e){
@@ -56,22 +59,30 @@ public class BaseExecutor<T> extends AbstractExecutor<T> {
                 errorInfo.setErrorMsg("系统异常!");
             }
             responseData.setErrorInfo(errorInfo);
-            ResultInfo resultInfo = new ResultInfo();
-            resultInfo.setCode(BusinessStatus.BUSINESSERROR.getCode());
-            resultInfo.setMsg(BusinessStatus.BUSINESSERROR.getMsg());
-            responseData.setResultInfo(resultInfo);
+            responseData.setResultInfo(createError());
             return responseData;
         }
 
-        ResultInfo resultInfo = new ResultInfo();
-        resultInfo.setCode(BusinessStatus.BUSINESSSUCCESS.getCode());
-        resultInfo.setMsg(BusinessStatus.BUSINESSSUCCESS.getMsg());
-        responseData.setResultInfo(resultInfo);
+        responseData.setResultInfo(createSuccess());
         return responseData;
     }
 
     @Override
     public T exectueBusiness(HttpServletRequest request, BusinessModel businessModel, Object... obj) throws Exception{
         return null;
+    }
+
+    private ResultInfo createSuccess(){
+        ResultInfo resultInfo = new ResultInfo();
+        resultInfo.setCode(BusinessStatus.BUSINESSSUCCESS.getCode());
+        resultInfo.setMsg(BusinessStatus.BUSINESSSUCCESS.getMsg());
+        return resultInfo;
+    }
+
+    private ResultInfo createError(){
+        ResultInfo resultInfo = new ResultInfo();
+        resultInfo.setCode(BusinessStatus.BUSINESSERROR.getCode());
+        resultInfo.setMsg(BusinessStatus.BUSINESSERROR.getMsg());
+        return resultInfo;
     }
 }
