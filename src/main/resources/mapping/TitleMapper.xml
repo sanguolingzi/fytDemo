@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fyt.business.mapper.TitleMapper">
+  <resultMap id="BaseResultMap" type="fyt.business.pojo.TitlePojo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="title_id" jdbcType="INTEGER" property="titleId" />
+    <result column="title_name" jdbcType="VARCHAR" property="titleName" />
+    <result column="title_state" jdbcType="VARCHAR" property="titleState" />
+    <result column="title_delete" jdbcType="INTEGER" property="titleDelete" />
+  </resultMap>
+
+  <select id="selectTitle" parameterType="java.util.Map" resultType="java.util.Map">
+      SELECT title_id,title_name,title_state from title
+  </select>
+
+  <select id="selectTitleMenu"  parameterType="java.util.Map" resultType="java.util.Map">
+      SELECT menu_id,menu_name from menu where menu_id=any(select menu_id from titlerelation where title_id = #{title_id})
+  </select>
+
+  <select id="selectSubmenu" parameterType="int" resultType="java.util.Map">
+      SELECT menu_id,menu_name,menu_lastid from menu where menu_lastid = #{0} and menu_delect=1
+  </select>
+
+
+
+
+</mapper>

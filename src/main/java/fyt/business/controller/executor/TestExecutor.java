@@ -16,8 +16,7 @@ public class TestExecutor extends BaseExecutor<String> {
 
     @Override
     public String exectueBusiness(HttpServletRequest request, BusinessModel businessModel, Object... obj) throws Exception {
-        testTkServiceImpl.testTransaction();
+        //testTkServiceImpl.testTransaction();
         return "success";
-
     }
 }

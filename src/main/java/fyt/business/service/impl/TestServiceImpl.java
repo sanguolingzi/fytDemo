@@ -67,15 +67,9 @@ public class TestServiceImpl implements TestService{
         if(menu_name!=""&&menu_lastid==""){
             name = "%"+menu_name+"%";
             paraMap.put("menu_name",name);
-            List<Map<String,Object>> list = customerBusiMapper.menuSelectByName(paraMap);
-            PageInfo pageInfo = new PageInfo(list);
-            pageData = new PageData(pageInfo.getTotal(),pageInfo.getList());
         }else if(menu_name==""&&menu_lastid!=""){
             lastid = new Integer(menu_lastid);
             paraMap.put("menu_lastid",lastid);
-            List<Map<String,Object>> list = customerBusiMapper.menuSelectByid(paraMap);
-            PageInfo pageInfo = new PageInfo(list);
-            pageData = new PageData(pageInfo.getTotal(),pageInfo.getList());
         }else if(menu_name!=""&&menu_lastid!=""){
             name = "%"+menu_name+"%";
             lastid = new Integer(menu_lastid);
@@ -107,5 +101,26 @@ public class TestServiceImpl implements TestService{
 
     }
 
+    @Override
+    public int menuUpdata(String menu_name,String menu_lastname,String menu_location,String menu_state,int menu_id) {
+        int lastid = customerBusiMapper.selectId(menu_lastname);
+        Map<String,Object> param = new HashMap<>();
+        param.put("menu_name", menu_name);
+        param.put("menu_lastid", lastid);
+        param.put("menu_lastname", menu_lastname);
+        param.put("menu_location", menu_location);
+        param.put("menu_state", menu_state);
+        param.put("menu_id", menu_id);
+        return customerBusiMapper.menuUpdata(param);
+    }
 
+    @Override
+    public int menuDelete(int menu_id){
+        return customerBusiMapper.menuDelete(menu_id);
+    }
+
+    @Override
+    public List<Map<String,Object>> menuName(Map<String,Object> paraMap) {
+        return customerBusiMapper.selectMenuName(paraMap);
+    }
 }

@@ -21,4 +21,10 @@ public interface CustomerBusiMapper{
     int menuInsert(Map<String,Object> paraMap);
 
     int selectId(String menu_lastname);
+
+    int menuUpdata(Map<String,Object> paraMap);
+
+    int menuDelete(int menu_id);
+
+    List<Map<String,Object>> selectMenuName(Map<String,Object> paraMap);
 }

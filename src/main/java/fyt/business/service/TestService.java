@@ -22,4 +22,10 @@ public interface TestService {
     PageData menuSelectBy(String menu_name,String menu_lastid,MenuNode menuNode);
 
     int menuInsert(String menu_name,String menu_lastname,String menu_location,String menu_state);
+
+    int menuUpdata(String menu_name,String menu_lastname,String menu_location,String menu_state,int menu_id);
+
+    int menuDelete(int menu_id);
+
+    List<Map<String,Object>> menuName(Map<String,Object> paraMap);
 }

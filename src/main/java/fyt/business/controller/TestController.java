@@ -75,7 +75,23 @@ public class TestController {
         return  testServiceImpl.menuInsert(menu_name,menu_lastname,menu_location,menu_state);
     }
 
+    @RequestMapping("Delete.do")
+    @ResponseBody
+    public Object menuDelete(String menu_id){
+        int id = new Integer(menu_id);
+        return testServiceImpl.menuDelete(id);
+    }
 
+    @RequestMapping("Updata")
+    @ResponseBody
+    public Object menuUpdata(String menu_name,String menu_lastname,String menu_location,String menu_state,String menu_id){
+        int id = new Integer(menu_id);
+        return  testServiceImpl.menuUpdata(menu_name,menu_lastname,menu_location,menu_state,id);
+    }
 
-
+    @RequestMapping("MenuName")
+    @ResponseBody
+    public Object menuName(){
+        return testServiceImpl.menuName(new HashMap());
+    }
 }

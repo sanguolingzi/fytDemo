@@ -18,6 +18,7 @@ public class JedisManager {
 
 
     public void test(){
+        //string list set hset
         //标准的设置key value值 方法 此方法未设置生命周期 故永久存在
         //jedisPool.getResource().set("key","value");
 

@@ -3,6 +3,7 @@ package fyt.business.model;
 import fyt.business.model.base.PageModel;
 
 public class MenuNode extends PageModel {
+
     private Integer menu_id ;
     private String menu_name;
     private Integer menu_lastid;

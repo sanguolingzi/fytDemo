@@ -28,9 +28,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  		功能名字<input type="text" id="menu_name"/>
-  		上级功能编号<input type="text" id="menu_lastid"/>
-  		<input type="button" id="where" value="查询"/>
   		</br>
   		<button type="button"  data-toggle="modal" data-target="#insert">
 		  	添加
@@ -38,16 +35,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<table id="tbl" border="1" style="width: 100%">
     	<thead>
 	  		<tr>
-	  			<th>功能编号</th>
-	  			<th>功能名称</th>
-	  			<th>上级功能编号</th>
-	  			<th>上级功能名称</th>
+	  			<th>权限编号</th>
+	  			<th>权限名称</th>
 	  			<th>状态</th>
 	  			<th>操作</th>
 	  		</tr>
   		</thead>
 	  		<tbody id="tb">
-		   </tbody>
+			</tbody>
 	   </table>
 
 	   	<div id="Pagination"></div>
@@ -192,64 +187,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		});
     	
 	        function pageselectCallback(page_index, jq) {
-	        	if($("#menu_name").val()==""&&$("#menu_lastid").val()==""){
                     initPagination(page_index);
-	        	}else{
-                    selectLike(page_index);
-	        	}
     		}
-	        
-	        function selectLike(page_index){
-	        	var name= $("#menu_name").val();
-	        	var lastid =$("#menu_lastid").val();
-	        	alert(name+"和"+lastid);
-	        	$.ajax({
-	                url : "/test/menuSelectBy.do",
-	                data : {
-	                    currentPage : page_index+1,
-	                    pageSize : page_size,
-	                    totalSize : total_size,
-	                    menu_name : name,
-	                    menu_lastid : lastid
-	                },
-	                type : "post",
-	                dataType : "json",
-	                async : false,  
-	                error:function(e){
-	                	alert(e);
-	                },
-	                success : function(data){
-	                	$("#tb").empty();
-	                    if (!$.isEmptyObject(data)) {
-	                      var Data=data;
-	                      for(var key in Data) { 
-	                           if(key=="totalRecord"){
-	                           		total_size = Data[key];
-	                           		alert(Data[key]);
-	                           }  else if(key=="listData"){
-	    	                       $(Data[key]).each(function(){
-	    		                       var html = "<tr>";
-	    				    			html+= "<td>"+this.menu_id+"</td>";
-	    				    			html+= "<td>"+this.menu_name+"</td>";
-	    				    			html+= "<td>"+this.menu_lastid+"</td>";
-	    				    			html+= "<td>"+this.menu_lastname+"</td>";
-	    				    			html+= "<td>"+this.menu_state+"</td>";
-                                       	html+= "<td><a href=\"#\" onclick=\"Delete("+this.menu_id+")\">删除</a> / <a>修改</a></td>"
-	    				    			html+= "</tr>";
-	    			    			   $("#tb").append(html);
-	    		    			  });
-	    	    			  }
-	                        }
-	                    } else {
-	                        alert("没有获取到相关信息！");
-	                    }
-	                }
-	            });
-	        }
+
+
 	        
     	function initPagination(page_index) {
         $.ajax({
-            url : "/test/menuSelectAll.do",
+            url : "/title/titleSelect.do",
             data : {
                 currentPage : page_index+1,
                 pageSize : page_size,
@@ -259,25 +204,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             dataType : "json",
             async : false,
             success : function(data){
+                alert(data);
             	$("#tb").empty();
                 if (!$.isEmptyObject(data)) {
-                  var Data=data;
-                  for(var key in Data) { 
-                       if(key=="totalRecord"){
-                       		total_size = Data[key];
-                       }  else if(key=="listData"){
-	                       $(Data[key]).each(function(){
-		                       var html = "<tr>";
-				    			html+= "<td>"+this.menu_id+"</td>";
-				    			html+= "<td>"+this.menu_name+"</td>";
-				    			html+= "<td>"+this.menu_lastid+"</td>";
-				    			html+= "<td>"+this.menu_lastname+"</td>";
-				    			html+= "<td>"+this.menu_state+"</td>";
-								html+= "<td><a href=\"#\" onclick=\"Delete("+this.menu_id+")\">删除</a> / <button type=\"button\"  data-toggle=\"modal\" data-target=\"#updata\" onclick=\"saveid("+this.menu_id+")\">修改</button></td>"
-			    			   $("#tb").append(html);
-		    			  });
-	    			  }
-                    }
+                  for(var key in data){
+                      if(key =="data"){
+                          var Data=data[key];
+                          for(var key in Data) {
+                              if(key=="totalRecord"){
+                                  total_size = Data[key];
+                              }  else if(key=="listData"){
+                                  $(Data[key]).each(function(){
+                                      var html = "<tr>";
+                                      html+= "<td>"+this.title_id+"</td>";
+                                      html+= "<td>"+this.title_name+"</td>";
+                                      html+= "<td>"+this.title_state+"</td>";
+                                      html+= "<td><a href=\"#\" onclick=\"Delete("+this.menu_id+")\">删除</a> / <button type=\"button\"  data-toggle=\"modal\" data-target=\"#updata\" onclick=\"saveid("+this.menu_id+")\">修改</button></td>"
+                                      $("#tb").append(html);
+                                  });
+                              }
+                          }
+					  }
+
+				  }
+
+
                 } else {
                     alert("没有获取到相关信息！");
                 }
@@ -377,7 +328,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }
 
 		function menuName(){
-    	    $.ajax({
+            $.ajax({
                 url : "/test/MenuName.do",
                 type:"post",
                 dataType:"json",
@@ -388,11 +339,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             var html = "";
                             html+= "<option value=\"this.menu_name\">"+this.menu_name+"</option>";
                             $("#menu_lastname").append(html);
-						}
-					)
-				}
-			})
-		}
+                        }
+                    )
+                }
+            })
+        }
     	</script>
   </body>
 </html>
