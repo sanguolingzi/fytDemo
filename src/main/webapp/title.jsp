@@ -58,13 +58,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <div class="modal-body">
       <div align="center">
         <from>
-        	菜单名称<input type="text" id="insertmenu_name"></br></br>
-        	菜单链接<input type="text" id="insertmenu_location">
+        	权限名称<input type="text" id="insertTitle_name"></br></br>
         	</br></br>
-        	<input type="radio" id="menu_state" name="menu_state" checked="checked" value="正常">正常</input>
+        	<input type="radio" id="menu_state" name="menu_state" checked="checked" value="可用">可用</input>
         	<input type="radio" id="menu_state" name="menu_state" value="失效">失效</input>
         	</br></br>
-        	上级菜单<select id="menu_lastname" name="lastname">
 
 				  </select>
 				  </br>
@@ -89,19 +87,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="modal-body">
 						<div align="center">
 							<from>
-								菜单名称<input type="text" id="updatamenu_name"></br></br>
-								菜单链接<input type="text" id="updatamenu_location">
-								</br></br>
-								<input type="radio" id="updata_state" name="menu_state" checked="checked" value="正常">正常</input>
+								权限名称<input type="text" id="updataTitle_name"></br></br>
+								</br>
+								<input type="radio" id="updata_state" name="menu_state" checked="checked" value="可用">可用</input>
 								<input type="radio" id="updata_state" name="menu_state" value="失效">失效</input>
 								</br></br>
-								上级菜单<select id="updata_lastname" name="lastname">
-								<option value="第1级功能">第1级功能</option>
-								<option value="第2级功能">第2级功能</option>
-								<option value="第3级功能">第3级功能</option>
-								<option value="第4级功能">第4级功能</option>
-							</select>
-								</br>
 								<div align="right">
 									<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 									<input type="button" class="btn btn-default" id="updataButton" value="修改"></input>
@@ -142,7 +132,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	    });
     		
     		$("#insertButton").click(function(){
-    			if($("#insertmenu_name").val()!=""&&$("#menu_lastname").val()!=""&&$("#insertmenu_location").val()!=""&&$("#menu_state").val()!=""){
+    			if($("#insertmenu_name").val()!=""&&$("#menu_state").val()!=""){
     			    alert("进入添加函数")
     				Insert();
     			}else{
@@ -204,7 +194,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             dataType : "json",
             async : false,
             success : function(data){
-                alert(data);
+                alert(page_size);
             	$("#tb").empty();
                 if (!$.isEmptyObject(data)) {
                   for(var key in data){
@@ -219,7 +209,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                       html+= "<td>"+this.title_id+"</td>";
                                       html+= "<td>"+this.title_name+"</td>";
                                       html+= "<td>"+this.title_state+"</td>";
-                                      html+= "<td><a href=\"#\" onclick=\"Delete("+this.menu_id+")\">删除</a> / <button type=\"button\"  data-toggle=\"modal\" data-target=\"#updata\" onclick=\"saveid("+this.menu_id+")\">修改</button></td>"
+                                      html+= "<td><a href=\"#\" onclick=\"Delete("+this.title_id+")\">删除</a> / <button type=\"button\"  data-toggle=\"modal\" data-target=\"#updata\" onclick=\"saveid("+this.title_id+")\">修改</button></td>"
                                       $("#tb").append(html);
                                   });
                               }
@@ -237,20 +227,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }
     	
     	function Insert(){
-    		var name = $("#insertmenu_name").val();
-    		var lastname = $("#menu_lastname").val();
-    		var location = $("#insertmenu_location").val();
+    		var name = $("#insertTitle_name").val();
     		var state = $("#menu_state").val();
-    		alert("name :"+name+"--" 
-			+"lastname :"+lastname+"--"+"location :"+location+"--"+"state :"+state);
+    		alert("name :"+name+"--"+"state :"+state);
     		
     		$.ajax({
-    			 url : "/test/Insert.do",
+    			 url : "/title/insertTitle.do",
     	            data : {
-    	                menu_name:name,
-    	                menu_lastname:lastname,
-    	                menu_location:location,
-    	                menu_state:state
+    	                title_name:name,
+    	                title_state:state
     	            },
     	            type : "post",
     	            dataType : "json",
@@ -260,25 +245,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						alert("错误");
                     },
     	            success : function(data){
-    			     alert("添加返回的函数"+data)
-    	            	if(data==1){
-    	            		alert(data);
-    	            		$("#insert").modal("hide");
-    	            	}else{
-    	            		alert("失败，功能名重复了");
-    	            	}
-    	            }
+
+                             alert("添加返回的函数"+data["data"])
+                             if(data["data"]==1){
+                                 $("#insert").modal("hide");
+                             }else{
+                                 alert("失败，功能名重复了");
+                             }
+						 }
     		})
     	}
 
     	function Delete(id){
-    	    var menuid = id;
-    	    alert("menu_id :"+menuid+"--"+"id :"+id);
+    	    var titleid = id;
+    	    alert("menu_id :"+titleid+"--"+"id :"+id);
 
     	    $.ajax({
-                url : "/test/Delete.do",
+                url : "/title/deleteTitle.do",
 				data :{
-                    "menu_id" : menuid
+                    "title_id" : titleid
 				},
 				type:"post",
 				dataType:"json",
@@ -296,28 +281,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
         
         function Updata() {
-            var name = $("#updatamenu_name").val();
-            var lastname = $("#updata_lastname").val();
-            var location = $("#updatamenu_location").val();
+            var name = $("#updataTitle_name").val();
             var state = $("#updata_state").val();
 
-            alert("name :"+name+"--"
-                +"lastname :"+lastname+"--"+"location :"+location+"--"+"state :"+state+"menu_id :"+menuid);
+            alert("name :"+name+"--"+"state :"+state+"menu_id :"+menuid);
 
             $.ajax({
-                url : "/test/Updata.do",
+                url : "/title/updataTitle.do",
                 data :{
-                    menu_name:name,
-                    menu_lastname:lastname,
-                    menu_location:location,
-                    menu_state:state,
-					menu_id:menuid
+                    title_name:name,
+                    title_state:state,
+					title_id:menuid
                 },
                 type:"post",
                 dataType:"json",
                 success :function(data){
-                    alert("修改的返回值"+data)
-                    if(data==1){
+                    alert("修改的返回值"+data["data"])
+                    if(data["data"]==1){
 						alert("修改成功");
                         $("#updata").modal("hide");
 					}else{

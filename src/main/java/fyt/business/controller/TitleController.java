@@ -23,4 +23,35 @@ public class TitleController {
         BaseExecutor executor = SpringContextUtil.getBean("selectTitleMenuExecutor");
         return executor.execute(request,businessModel);
     }
+
+    @RequestMapping(value="selectMenuAll.do")
+    public Object selectTitleMenuAll(HttpServletRequest request, BusinessModel businessModel){
+        BaseExecutor executor = SpringContextUtil.getBean("selectTitleMenuAllExecutor");
+        return executor.execute(request,businessModel);
+    }
+
+    @RequestMapping(value="insertTitle.do")
+    public Object insertTitle(HttpServletRequest request, BusinessModel businessModel){
+        BaseExecutor executor = SpringContextUtil.getBean("insertTitleExecutor");
+        return executor.execute(request,businessModel);
+    }
+
+    @RequestMapping(value="insertTitleMenu.do")
+    public Object insertTitleMenu(HttpServletRequest request, BusinessModel businessModel){
+        BaseExecutor executor = SpringContextUtil.getBean("insertTitleMenuExecutor");
+        return executor.execute(request,businessModel);
+    }
+
+    @RequestMapping(value="updataTitle.do")
+    public Object updataTitle(HttpServletRequest request, BusinessModel businessModel){
+        BaseExecutor executor = SpringContextUtil.getBean("updataTitleExecutor");
+        return executor.execute(request,businessModel);
+    }
+
+    @RequestMapping(value="deleteTitle.do")
+    public Object deleteTitle(HttpServletRequest request, BusinessModel businessModel){
+        BaseExecutor executor = SpringContextUtil.getBean("deleteTitleExecutor");
+        return executor.execute(request,businessModel);
+    }
+
 }

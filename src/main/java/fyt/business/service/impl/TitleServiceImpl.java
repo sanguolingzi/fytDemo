@@ -45,4 +45,44 @@ public class TitleServiceImpl implements TitleService
         }
         return list;
     }
+
+    @Override
+    public int insertTitle(Map<String, Object> paraMap) {
+        try {
+            return mapper.insertTitle(paraMap);
+        }catch (Exception e){
+            e.getMessage();
+            return 0;
+        }
+    }
+
+    @Override
+    public int updataTitle(Map<String, Object> paraMap) {
+        return mapper.updateTitle(paraMap);
+    }
+
+    @Override
+    public int deleteTitle(int i) {
+        int end = mapper.deleteTitle(i);
+        mapper.deleteTitleMenu(i);
+        return end;
+    }
+
+    @Override
+    public int insertTitleMenu(Map<String, Object> paraMap) {
+        return mapper.insertTitleMenu(paraMap);
+    }
+
+    @Override
+    public List<Map<String, Object>> selectTitleMenuAll() {
+        Map<String, Object> paraMap = new HashMap();
+        List<Map<String,Object>> list = mapper.selectTitleMenuAll(paraMap);
+        for(Map<String, Object> map:list){
+            int menu_id = (int)(map.get("menu_id"));
+            System.out.println(menu_id);
+            System.out.println(mapper.selectSubmenuAll(menu_id));
+            map.put("SubmenuList",mapper.selectSubmenuAll(menu_id));
+        }
+        return list;
+    }
 }

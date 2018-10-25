@@ -18,7 +18,13 @@ public class SelectTitleExecutor extends BaseExecutor<Object> {
 
     @Override
     public Object exectueBusiness(HttpServletRequest request, BusinessModel businessModel, Object... obj) {
+        int currentPage = new Integer(request.getParameter("currentPage"));
+        int pageSize = new Integer(request.getParameter("pageSize"));
+        int totalSize = new Integer(request.getParameter("totalSize"));
         TitlePojo titlePojo = new TitlePojo();
+        titlePojo.setCurrentPage(currentPage);
+        titlePojo.setPageSize(pageSize);
+        titlePojo.setIsLimit(totalSize);
         return titleService.selectTitle(titlePojo);
     }
 }

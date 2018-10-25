@@ -19,15 +19,15 @@
     </select>
 
     <select id="menuSelect" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT menu_id,menu_name,menu_lastid,menu_lastname,menu_state from menu where menu_delect=1
+        SELECT menu_id,menu_name,menu_lastid,menu_lastname,menu_state from menu where menu_delete=1
     </select>
 
     <select id="menuSelectByid" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT menu_id,menu_name,menu_lastid,menu_lastname,menu_state from menu where menu_lastid = #{menu_lastid} and menu_delect=1
+        SELECT menu_id,menu_name,menu_lastid,menu_lastname,menu_state from menu where menu_lastid = #{menu_lastid} and menu_delete=1
     </select>
 
     <select id="menuSelectByName" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT menu_id,menu_name,menu_lastid,menu_lastname,menu_state from menu where menu_name like #{menu_name} and menu_delect=1
+        SELECT menu_id,menu_name,menu_lastid,menu_lastname,menu_state from menu where menu_name like #{menu_name} and menu_delete=1
     </select>
 
     <select id="menuSelectBy" parameterType="java.util.Map" resultType="java.util.Map">
@@ -39,11 +39,11 @@
         <if test="menu_lastid != null and menu_lastid != ''">
             and  menu_lastid = #{menu_lastid}
         </if>
-        menu_name like #{menu_name} and menu_lastid=#{menu_lastid} and menu_delect=1
+        menu_name like #{menu_name} and menu_lastid=#{menu_lastid} and menu_delete=1
     </select>
 
     <insert id="menuInsert" parameterType="java.util.Map">
-        INSERT into menu(menu_name,menu_lastid,menu_lastname,menu_location,menu_state,menu_delect) VALUES(#{name},#{lastid},#{lastname},#{location},#{state},1)
+        INSERT into menu(menu_name,menu_lastid,menu_lastname,menu_location,menu_state,menu_delete) VALUES(#{name},#{lastid},#{lastname},#{location},#{state},1)
     </insert>
 
     <update id="menuUpdata" parameterType="java.util.Map">
@@ -51,7 +51,7 @@
     </update>
 
     <update id="menuDelete" parameterType="java.util.Map">
-        UPDATE menu set menu_delect = 0 where menu_id = #{menu_id} or menu_lastid =#{menu_id}
+        UPDATE menu set menu_delete = 0 where menu_id = #{menu_id} or menu_lastid =#{menu_id}
     </update>
 
     <select id="selectId" parameterType="String" resultType="int">
@@ -59,6 +59,6 @@
     </select>
 
     <select id="selectMenuName" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT menu_name from menu where menu_delect=1 ORDER BY menu_id
+        SELECT menu_name from menu where menu_delete=1 ORDER BY menu_id
     </select>
 </mapper>

@@ -11,13 +11,14 @@
         <table id="titleTable" border="0" style="width: 100%">
 
         </table>
+        <input type="button" id="titlerelationAll" value="提交">
     </from>
 
     <script type="text/javascript">
         titleRelation();
         function titleRelation(){
             $.ajax({
-                url : "/title/selectMenu.do",
+                url : "/title/selectMenuAll.do",
                 type:"post",
                 dataType:"json",
                 success :function(data){
@@ -33,15 +34,14 @@
                                     var html="";
                                     var html2="";
                                     for(var key in Data2){
-                                        if(key=="menu_lastname"){
+                                        if(key=="menu_name"){
                                             html+="<tr>";
                                             html+="<td>"+Data2[key]+"</td>";
                                             html+="</tr>"
-                                            alert(Data2[key]);
                                         }else if(key=="SubmenuList"){
                                             html2+="<tr>"
                                             $(Data2[key]).each(function(){
-                                                html2+="<td><input id=\"menuchoose\" type=\"checkbox\" checked=\"true\" value=\""+this.menu_id+"\">"+this.menu_name+"</td>"
+                                                html2+="<td><input id=\"menuchoose\" name=\"menuChoose\" type=\"checkbox\" value=\""+this.menu_id+"\">"+this.menu_name+"</td>"
                                             })
                                             html2+="</tr>"
                                         }
@@ -55,6 +55,32 @@
                 }
             })
         }
+
+        $("#titlerelationAll").click(function(){
+            var Arr = new Array()
+            //$('input:checkbox:checked') 等同于 $('input[type=checkbox]:checked')
+            //意思是选择被选中的checkbox
+
+            $.each($('input:checkbox:checked'),function(i){
+                window.alert("你选了："+ $('input[type=checkbox]:checked').length+"个，其中有："+$(this).val());
+                    Arr[i] = $(this).val();
+            });
+            $.ajax({
+                url:"/title/insertTitleMenu.do",
+                data:{Arr:Arr},
+                type:"post",
+                dataType:"json",
+                traditional: true,
+                success:function(data){
+                    if(data["data"]==1){
+                        alert("提交成功");
+                    }else {
+                        alert("提交失败");
+                    }
+                }
+            }
+            )
+        });
     </script>
 </body>
 </html>

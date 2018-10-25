@@ -11,19 +11,53 @@
     <result column="title_delete" jdbcType="INTEGER" property="titleDelete" />
   </resultMap>
 
+    <!-- 权限全部查询 -->
   <select id="selectTitle" parameterType="java.util.Map" resultType="java.util.Map">
-      SELECT title_id,title_name,title_state from title
+      SELECT title_id,title_name,title_state from title where title_delete = 1
   </select>
 
+    <!-- 新增权限 -->
+  <insert id="insertTitle" parameterType="java.util.Map">
+      insert into title(title_name,title_state,title_delete) VALUES(#{title_name},#{title_state},1)
+  </insert>
+
+    <!-- 权限对应最上级菜单ALL -->
+  <select id="selectTitleMenuAll" parameterType="java.util.Map" resultType="java.util.Map">
+      SELECT menu_id,menu_name from menu where menu_lastid=-1 and menu_delete = 1
+  </select>
+
+    <!-- 菜单对应菜单ALL -->
+  <select id="selectSubmenuAll" parameterType="int" resultType="java.util.Map">
+      SELECT menu_id,menu_name,menu_lastid from menu where menu_lastid = #{0} and menu_delete=1
+  </select>
+
+    <!-- 权限对应菜单 -->
   <select id="selectTitleMenu"  parameterType="java.util.Map" resultType="java.util.Map">
-      SELECT menu_id,menu_name from menu where menu_id=any(select menu_id from titlerelation where title_id = #{title_id})
+      SELECT menu_id,menu_lastname from menu where menu_id=any(select menu_id from titlerelation where title_id = #{title_id})
   </select>
 
+    <!-- 菜单对应菜单 -->
   <select id="selectSubmenu" parameterType="int" resultType="java.util.Map">
-      SELECT menu_id,menu_name,menu_lastid from menu where menu_lastid = #{0} and menu_delect=1
+      SELECT menu_id,menu_name,menu_lastid from menu where menu_id = #{0} and menu_delete=1
   </select>
 
 
+    <!-- 修改权限 -->
+  <update id="updateTitle" parameterType="java.util.Map">
+      UPDATE title set title_name=#{title_name},title_state=#{title_state} where title_id = #{title_id}
+  </update>
 
+    <!-- 删除权限 -->
+  <update id="deleteTitle" parameterType="int">
+       UPDATE title set title_delete = 0 where title_id = #{0}
+  </update>
 
+    <!-- 删除权限菜单关系 -->
+  <update id="deleteTitleMenu" parameterType="int">
+      UPDATE titlerelation set titlerelation_delete = 0 where title_id = #{0}
+  </update>
+
+  <insert id="insertTitleMenu" parameterType="java.util.Map">
+      insert into titlerelation VALUES(#{title_id},#{menu_id},1)
+  </insert>
 </mapper>
