@@ -9,6 +9,8 @@ import java.util.Map;
 public interface TitleMapper extends Mapper<TitlePojo> {
     List<Map<String,Object>> selectTitle(Map<String,Object> paraMap);
 
+    List<Map<String,Object>> selectTitleName(Map<String,Object> paraMap);
+
     List<Map<String,Object>> selectTitleMenu(Map<String,Object> paraMap);
 
     List<Map<String,Object>> selectSubmenu(int i);

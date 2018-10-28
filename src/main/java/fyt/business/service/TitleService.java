@@ -10,6 +10,8 @@ public interface TitleService
 {
     PageData selectTitle(TitlePojo titlePojo);
 
+    List<Map<String,Object>> selectTitleName(String title_id);
+
     List<Map<String,Object>> selectTitleMenu(int i);
 
     int insertTitle(Map<String,Object> paraMap);

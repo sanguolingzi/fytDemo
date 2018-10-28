@@ -16,6 +16,9 @@
       SELECT title_id,title_name,title_state from title where title_delete = 1
   </select>
 
+    <select id="selectTitleName" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT title_name FROM title where title_delete = 1 and title_id=#{title_id}
+    </select>
     <!-- 新增权限 -->
   <insert id="insertTitle" parameterType="java.util.Map">
       insert into title(title_name,title_state,title_delete) VALUES(#{title_name},#{title_state},1)

@@ -11,7 +11,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     
     <title>My JSP 'show.jsp' starting page</title>
-    
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -112,7 +111,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	//第几页
     	var pageIndex = 0;
 
-    	var menuid = 0;
+    	var titleId = 0;
     	var menuname=0;
     	
     	 $(document).ready(function() {
@@ -132,7 +131,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	    });
     		
     		$("#insertButton").click(function(){
-    			if($("#insertmenu_name").val()!=""&&$("#menu_state").val()!=""){
+    			if($("#insertTitle_name").val()!=""&&$("#menu_state").val()!=""){
     			    alert("进入添加函数")
     				Insert();
     			}else{
@@ -150,31 +149,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			})
 
 			$("#updataButton").click(function(){
-			    if($("#updatamenu_name").val()!=""&&$("#updatamenu_lastname").val()!=""&&$("#updatamenu_location").val()!=""&&$("#updatamenu_state").val()!=""){
+			    if($("#updataTitle_name").val()!=""&&$("#updata_state").val()!=""){
                     Updata();
 				}else{
                     alert("必须全部填写完");
 				}
             })
-    	 
-    		$("#where").click(function(){
-    			if($("#menu_name").val()==""&&$("#menu_lastid").val()==""){
-                    initPagination(pageIndex);
-    			}else{
-    				selectLike(pageIndex);
-    			}
-    			alert("点击查询");
-    			$("#Pagination").pagination(total_size, {
-    	            callback : pageselectCallback,
-    	            prev_text : '上一页',
-    	            next_text : '下一页',
-    	            link_to : 'javascript:void(0);',//分页的链接,默认“#”
-    	            items_per_page : page_size,//每页显示的条目数           
-    	            num_display_entries : 5,//连续分页主体部分显示的分页条目数   
-    	            current_page : pageIndex,//当前选中的页面
-    	            num_edge_entries : 1//两侧显示的首尾分页的条目数
-    	        });
-    		});
     	
 	        function pageselectCallback(page_index, jq) {
                     initPagination(page_index);
@@ -249,6 +229,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                              alert("添加返回的函数"+data["data"])
                              if(data["data"]==1){
                                  $("#insert").modal("hide");
+                                 location.reload(true);
                              }else{
                                  alert("失败，功能名重复了");
                              }
@@ -275,8 +256,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		
 		function saveid(id) {
-			menuid = id;
-			alert(menuid);
+            titleId = id;
+			alert(titleId);
+            $.ajax({
+                url : "/title/titleSelectName.do",
+                data : {
+                    title_id:titleId
+                },
+                type:"post",
+                dataType:"json",
+                success :function(data){
+                    for(var key in data){
+                        if(key == "data"){
+                                $(data["data"]).each(function(){
+									$("#updataTitle_name").val(this.title_name);
+                                })
+                        }
+                    }
+                }
+            })
         }
 		
         
@@ -284,14 +282,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             var name = $("#updataTitle_name").val();
             var state = $("#updata_state").val();
 
-            alert("name :"+name+"--"+"state :"+state+"menu_id :"+menuid);
+            alert("name :"+name+"--"+"state :"+state);
 
             $.ajax({
                 url : "/title/updataTitle.do",
                 data :{
                     title_name:name,
                     title_state:state,
-					title_id:menuid
+					title_id:titleId
                 },
                 type:"post",
                 dataType:"json",
@@ -300,6 +298,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     if(data["data"]==1){
 						alert("修改成功");
                         $("#updata").modal("hide");
+                        location.reload(true);
 					}else{
                         alert("修改失败");
 					}

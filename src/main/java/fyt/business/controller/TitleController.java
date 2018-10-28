@@ -18,6 +18,12 @@ public class TitleController {
         return executor.execute(request,businessModel);
     }
 
+    @RequestMapping(value="titleSelectName.do")
+    public Object selectTitleName(HttpServletRequest request, BusinessModel businessModel){
+        BaseExecutor executor = SpringContextUtil.getBean("selectTitleNameExecutor");
+        return executor.execute(request,businessModel);
+    }
+
     @RequestMapping(value="selectMenu.do")
     public Object selectTitleMenu(HttpServletRequest request, BusinessModel businessModel){
         BaseExecutor executor = SpringContextUtil.getBean("selectTitleMenuExecutor");

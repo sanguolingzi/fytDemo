@@ -19,27 +19,16 @@
     </select>
 
     <select id="menuSelect" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT menu_id,menu_name,menu_lastid,menu_lastname,menu_state from menu where menu_delete=1
-    </select>
-
-    <select id="menuSelectByid" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT menu_id,menu_name,menu_lastid,menu_lastname,menu_state from menu where menu_lastid = #{menu_lastid} and menu_delete=1
-    </select>
-
-    <select id="menuSelectByName" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT menu_id,menu_name,menu_lastid,menu_lastname,menu_state from menu where menu_name like #{menu_name} and menu_delete=1
-    </select>
-
-    <select id="menuSelectBy" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT menu_id,menu_name,menu_lastid,menu_lastname,menu_state from menu
-        where 1=1
-        <if test="menu_name != null">
-           and  menu_name like concat('%',#{menu_name},'%')
+        SELECT menu_id,menu_name,menu_location,menu_lastid,menu_lastname,menu_state from menu where menu_delete=1
+        <if test="menu_name != null and menu_name !=''">
+            and  menu_name like concat('%',#{menu_name},'%')
         </if>
         <if test="menu_lastid != null and menu_lastid != ''">
             and  menu_lastid = #{menu_lastid}
         </if>
-        menu_name like #{menu_name} and menu_lastid=#{menu_lastid} and menu_delete=1
+        <if test="menu_id !=null and menu_id !=''">
+            and menu_id =#{menu_id}
+        </if>
     </select>
 
     <insert id="menuInsert" parameterType="java.util.Map">

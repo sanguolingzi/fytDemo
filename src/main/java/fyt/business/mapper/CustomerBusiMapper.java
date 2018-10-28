@@ -10,12 +10,6 @@ public interface CustomerBusiMapper{
 
     List<Map<String,Object>> testSelect(Map<String,Object> paraMap);
 
-    List<Map<String,Object>> menuSelectByid(Map<String,Object> paraMap);
-
-    List<Map<String,Object>> menuSelectByName(Map<String,Object> paraMap);
-
-    List<Map<String,Object>> menuSelectBy(Map<String,Object> paraMap);
-
     List<Map<String,Object>> menuSelect(Map<String,Object> paraMap);
 
     int menuInsert(Map<String,Object> paraMap);

@@ -17,9 +17,8 @@ public interface TestService {
 
     PageData testPageSelect(TestModel testModel);
 
-    PageData menuSelectAll(MenuNode menuNode);
+    PageData menuSelectAll(String menu_name,String menu_lastid,String menu_id,MenuNode menuNode);
 
-    PageData menuSelectBy(String menu_name,String menu_lastid,MenuNode menuNode);
 
     int menuInsert(String menu_name,String menu_lastname,String menu_location,String menu_state);
 

@@ -59,14 +59,8 @@ public class TestController {
 
     @RequestMapping("menuSelectAll.do")
     @ResponseBody
-    public Object menuSelectAll(MenuNode menuNode){
-        return testServiceImpl.menuSelectAll(menuNode);
-    }
-
-    @RequestMapping("menuSelectBy.do")
-    @ResponseBody
-    public Object menuSelectBy(String menu_name,String menu_lastid,MenuNode menuNode){
-        return testServiceImpl.menuSelectBy(menu_name,menu_lastid,menuNode);
+    public Object menuSelectAll(String menu_name,String menu_lastid,String menu_id,MenuNode menuNode){
+        return testServiceImpl.menuSelectAll(menu_name,menu_lastid,menu_id,menuNode);
     }
 
     @RequestMapping("Insert.do")

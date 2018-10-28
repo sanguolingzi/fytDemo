@@ -27,9 +27,18 @@ public class TitleServiceImpl implements TitleService
         PageHelper.startPage(titlePojo.getCurrentPage(),titlePojo.getPageSize());
         Map<String,Object> paraMap = new HashMap();
         List<Map<String,Object>> list = mapper.selectTitle(paraMap);
+        System.out.println(list);
         PageInfo pageInfo = new PageInfo(list);
         PageData<Map<String,Object>> pageData = new PageData(pageInfo.getTotal(),pageInfo.getList());
         return pageData;
+    }
+
+    @Override
+    public List<Map<String, Object>> selectTitleName(String title_id) {
+        Map<String,Object> paraMap = new HashMap();
+        paraMap.put("title_id",title_id);
+        List<Map<String,Object>> list = mapper.selectTitleName(paraMap);
+        return list;
     }
 
     @Override

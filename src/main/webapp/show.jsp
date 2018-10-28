@@ -127,12 +127,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	//第几页
     	var pageIndex = 0;
 
+    	var menu_name = '';
+    	var menu_lastid = '';
     	var menuid = 0;
     	var menuname=0;
     	
     	 $(document).ready(function() {
     	        //初始化分页，展示分页信息并动态获取总数据条数、每页展示条数
-	        		initPagination(pageIndex);
+	        		initPagination(pageIndex,menu_name,menu_lastid);
     	        //初始化分页插件
     	        $("#Pagination").pagination(total_size, {
     	            callback : pageselectCallback,
@@ -173,87 +175,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             })
     	 
     		$("#where").click(function(){
-    			if($("#menu_name").val()==""&&$("#menu_lastid").val()==""){
-                    initPagination(pageIndex);
-    			}else{
-    				selectLike(pageIndex);
-    			}
-    			alert("点击查询");
-    			$("#Pagination").pagination(total_size, {
-    	            callback : pageselectCallback,
-    	            prev_text : '上一页',
-    	            next_text : '下一页',
-    	            link_to : 'javascript:void(0);',//分页的链接,默认“#”
-    	            items_per_page : page_size,//每页显示的条目数           
-    	            num_display_entries : 5,//连续分页主体部分显示的分页条目数   
-    	            current_page : pageIndex,//当前选中的页面
-    	            num_edge_entries : 1//两侧显示的首尾分页的条目数
-    	        });
+				initPagination(pageIndex,$("#menu_name").val(),$("#menu_lastid").val());
+                $("#Pagination").pagination(total_size, {
+                    callback : pageselectCallback,
+                    prev_text : '上一页',
+                    next_text : '下一页',
+                    link_to : 'javascript:void(0);',//分页的链接,默认“#”
+                    items_per_page : page_size,//每页显示的条目数
+                    num_display_entries : 5,//连续分页主体部分显示的分页条目数
+                    current_page : pageIndex,//当前选中的页面
+                    num_edge_entries : 1//两侧显示的首尾分页的条目数
+                });
     		});
     	
 	        function pageselectCallback(page_index, jq) {
-	        	if($("#menu_name").val()==""&&$("#menu_lastid").val()==""){
-                    initPagination(page_index);
-	        	}else{
-                    selectLike(page_index);
-	        	}
+                    initPagination(page_index,$("#menu_name").val(),$("#menu_lastid").val());
     		}
 	        
-	        function selectLike(page_index){
-	        	var name= $("#menu_name").val();
-	        	var lastid =$("#menu_lastid").val();
-	        	alert(name+"和"+lastid);
-	        	$.ajax({
-	                url : "/test/menuSelectBy.do",
-	                data : {
-	                    currentPage : page_index+1,
-	                    pageSize : page_size,
-	                    totalSize : total_size,
-	                    menu_name : name,
-	                    menu_lastid : lastid
-	                },
-	                type : "post",
-	                dataType : "json",
-	                async : false,  
-	                error:function(e){
-	                	alert(e);
-	                },
-	                success : function(data){
-	                	$("#tb").empty();
-	                    if (!$.isEmptyObject(data)) {
-	                      var Data=data;
-	                      for(var key in Data) { 
-	                           if(key=="totalRecord"){
-	                           		total_size = Data[key];
-	                           		alert(Data[key]);
-	                           }  else if(key=="listData"){
-	    	                       $(Data[key]).each(function(){
-	    		                       var html = "<tr>";
-	    				    			html+= "<td>"+this.menu_id+"</td>";
-	    				    			html+= "<td>"+this.menu_name+"</td>";
-	    				    			html+= "<td>"+this.menu_lastid+"</td>";
-	    				    			html+= "<td>"+this.menu_lastname+"</td>";
-	    				    			html+= "<td>"+this.menu_state+"</td>";
-                                       	html+= "<td><a href=\"#\" onclick=\"Delete("+this.menu_id+")\">删除</a> / <a>修改</a></td>"
-	    				    			html+= "</tr>";
-	    			    			   $("#tb").append(html);
-	    		    			  });
-	    	    			  }
-	                        }
-	                    } else {
-	                        alert("没有获取到相关信息！");
-	                    }
-	                }
-	            });
-	        }
-	        
-    	function initPagination(page_index) {
+    	function initPagination(page_index,menu_name,menu_lastid) {
+		var name = menu_name;
+		var lastid = menu_lastid;
         $.ajax({
             url : "/test/menuSelectAll.do",
             data : {
                 currentPage : page_index+1,
                 pageSize : page_size,
-                totalSize : total_size
+                totalSize : total_size,
+				menu_name :	name,
+				menu_lastid : lastid
             },
             type : "post",
             dataType : "json",
@@ -272,7 +221,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				    			html+= "<td>"+this.menu_name+"</td>";
 				    			html+= "<td>"+this.menu_lastid+"</td>";
 				    			html+= "<td>"+this.menu_lastname+"</td>";
-				    			html+= "<td>"+this.menu_state+"</td>";
+				    			if(this.menu_state==1){
+									html+= "<td>正常</td>";
+								}else if(this.menu_state==0){
+                                    html+= "<td>失效</td>";
+								}else {
+                                    html+= "<td>"+this.menu_state+"</td>";
+								}
 								html+= "<td><a href=\"#\" onclick=\"Delete("+this.menu_id+")\">删除</a> / <button type=\"button\"  data-toggle=\"modal\" data-target=\"#updata\" onclick=\"saveid("+this.menu_id+")\">修改</button></td>"
 			    			   $("#tb").append(html);
 		    			  });
@@ -338,9 +293,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			})
 		}
 		
-		function saveid(id) {
-			menuid = id;
+		function saveid() {
+			menuid = arguments[0];
 			alert(menuid);
+			$.ajax({
+				url : "/test/menuSelectAll.do",
+				data : {
+				    menu_id:menuid
+				},
+				type:"post",
+				dataType:"json",
+                success :function(data){
+					var Data = data;
+					for(var key in Data){
+						if(key == "listData"){
+                            $(Data[key]).each(function() {
+								$("#updatamenu_name").val(this.menu_name);
+                                $("#updatamenu_location").val(this.menu_location);
+                            });
+						}
+					}
+                }
+			})
         }
 		
         
@@ -365,11 +339,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 type:"post",
                 dataType:"json",
                 success :function(data){
-                    alert("修改的返回值"+data)
                     if(data==1){
 						alert("修改成功");
                         $("#updata").modal("hide");
-					}else{
+                        window.location.reload();
+                    }else{
                         alert("修改失败");
 					}
                 }
@@ -386,7 +360,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     $(data).each(
                         function(){
                             var html = "";
-                            html+= "<option value=\"this.menu_name\">"+this.menu_name+"</option>";
+                            html+= "<option value=\""+this.menu_name+"\">"+this.menu_name+"</option>";
                             $("#menu_lastname").append(html);
 						}
 					)

@@ -48,37 +48,15 @@ public class TestServiceImpl implements TestService{
     }
 
     @Override
-    public PageData menuSelectAll(MenuNode menuNode) {
+    public PageData menuSelectAll(String menu_name,String menu_lastid,String menu_id,MenuNode menuNode) {
         PageHelper.startPage(menuNode.getCurrentPage(),menuNode.getPageSize());
         Map<String,Object> paraMap = new HashMap();
+        paraMap.put("menu_name",menu_name);
+        paraMap.put("menu_lastid",menu_lastid);
+        paraMap.put("menu_id",menu_id);
         List<Map<String,Object>> list = customerBusiMapper.menuSelect(paraMap);
         PageInfo pageInfo = new PageInfo(list);
         PageData<Map<String,Object>> pageData = new PageData(pageInfo.getTotal(),pageInfo.getList());
-        return pageData;
-    }
-
-    @Override
-    public PageData menuSelectBy(String menu_name,String menu_lastid,MenuNode menuNode) {
-        String name = "";
-        int lastid = 0;
-        PageHelper.startPage(menuNode.getCurrentPage(),menuNode.getPageSize());
-        PageData<Map<String,Object>> pageData = null;
-        Map<String,Object> paraMap = new HashMap();
-        if(menu_name!=""&&menu_lastid==""){
-            name = "%"+menu_name+"%";
-            paraMap.put("menu_name",name);
-        }else if(menu_name==""&&menu_lastid!=""){
-            lastid = new Integer(menu_lastid);
-            paraMap.put("menu_lastid",lastid);
-        }else if(menu_name!=""&&menu_lastid!=""){
-            name = "%"+menu_name+"%";
-            lastid = new Integer(menu_lastid);
-            paraMap.put("menu_name",name);
-            paraMap.put("menu_lastid",lastid);
-            List<Map<String,Object>> list = customerBusiMapper.menuSelectBy(paraMap);
-            PageInfo pageInfo = new PageInfo(list);
-            pageData = new PageData(pageInfo.getTotal(),pageInfo.getList());
-        }
         return pageData;
     }
 
