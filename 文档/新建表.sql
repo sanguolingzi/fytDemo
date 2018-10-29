@@ -37,7 +37,7 @@ create table menu(
 	#菜单状态
 	menu_state VARCHAR(10),
 	#菜单删除状态
-	menu_delect int(10)
+	menu_delete int(10)
 )
 
 #权限表
