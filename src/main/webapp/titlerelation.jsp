@@ -7,6 +7,9 @@
 <body>
     管理权限
     <hr>
+    <div id="titleName">
+        权限名称 : <%=request.getParameter("title_name")%>
+    </div>
     <from>
         <table id="titleTable" border="0" style="width: 100%">
 
@@ -14,20 +17,22 @@
     </from>
 
     <script type="text/javascript">
+        var titleid = <%=request.getParameter("title_id")%>
         titleRelation();
         function titleRelation(){
             $.ajax({
                 url : "/title/selectMenu.do",
+                data:{
+                    "title_id": titleid
+                },
                 type:"post",
                 dataType:"json",
                 success :function(data){
                     $("#titleTable").empty();
-                    alert(data["data"]);
                     if (!$.isEmptyObject(data)){
                         for(var key in data){
                             if(key =="data"){
                                 var Data = data[key];
-                                alert(Data.length);
                                 for(var i=0;i<Data.length;i++){
                                     var Data2 = Data[i];
                                     var html="";
@@ -37,7 +42,6 @@
                                             html+="<tr>";
                                             html+="<td>"+Data2[key]+"</td>";
                                             html+="</tr>"
-                                            alert(Data2[key]);
                                         }else if(key=="SubmenuList"){
                                             html2+="<tr>"
                                             $(Data2[key]).each(function(){

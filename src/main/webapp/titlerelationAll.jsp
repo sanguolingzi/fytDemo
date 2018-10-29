@@ -7,6 +7,9 @@
 <body>
     管理权限
     <hr>
+    <div id="titleName">
+        权限名称 : <%=request.getParameter("title_name")%>
+    </div>
     <from>
         <table id="titleTable" border="0" style="width: 100%">
 
@@ -28,7 +31,6 @@
                         for(var key in data){
                             if(key =="data"){
                                 var Data = data[key];
-                                alert(Data.length);
                                 for(var i=0;i<Data.length;i++){
                                     var Data2 = Data[i];
                                     var html="";
@@ -58,6 +60,7 @@
 
         $("#titlerelationAll").click(function(){
             var Arr = new Array()
+            var titleid = <%=request.getParameter("title_id")%>
             //$('input:checkbox:checked') 等同于 $('input[type=checkbox]:checked')
             //意思是选择被选中的checkbox
 
@@ -67,7 +70,9 @@
             });
             $.ajax({
                 url:"/title/insertTitleMenu.do",
-                data:{Arr:Arr},
+                data:{Arr:Arr,
+                    title_id :titleid
+                },
                 type:"post",
                 dataType:"json",
                 traditional: true,

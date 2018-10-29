@@ -18,11 +18,12 @@ public class InsertTitleMenuExecutor extends BaseExecutor<Object> {
     @Override
     public Object exectueBusiness(HttpServletRequest request,BusinessModel businessModel,Object... obj) {
         Map<String,Object> paraMap = new HashMap();
+        int id = new Integer(request.getParameter("title_id"));
         String [] str = request.getParameterValues("Arr");
         int end=0;
         for (int i=0;i<str.length;i++){
             int j = new Integer(str[i]);
-            paraMap.put("title_id",1);
+            paraMap.put("title_id",id);
             paraMap.put("menu_id",j);
             if(i==str.length-1){
                 end = titleService.insertTitleMenu(paraMap);

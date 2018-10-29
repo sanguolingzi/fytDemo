@@ -132,21 +132,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		
     		$("#insertButton").click(function(){
     			if($("#insertTitle_name").val()!=""&&$("#menu_state").val()!=""){
-    			    alert("进入添加函数")
     				Insert();
     			}else{
     				alert("必须全部填写完");
     			}
     		});
-
-    		$("#menu_lastname").click(function(){
-    		    menuname++
-                if(menuname==1){
-                    menuName();
-				}else{
-                    menuname=0;
-				}
-			})
 
 			$("#updataButton").click(function(){
 			    if($("#updataTitle_name").val()!=""&&$("#updata_state").val()!=""){
@@ -174,7 +164,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             dataType : "json",
             async : false,
             success : function(data){
-                alert(page_size);
             	$("#tb").empty();
                 if (!$.isEmptyObject(data)) {
                   for(var key in data){
@@ -189,7 +178,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                       html+= "<td>"+this.title_id+"</td>";
                                       html+= "<td>"+this.title_name+"</td>";
                                       html+= "<td>"+this.title_state+"</td>";
-                                      html+= "<td><a href=\"#\" onclick=\"Delete("+this.title_id+")\">删除</a> / <button type=\"button\"  data-toggle=\"modal\" data-target=\"#updata\" onclick=\"saveid("+this.title_id+")\">修改</button></td>"
+                                      html+= "<td><a href=\"#\" onclick=\"Delete("+this.title_id+")\">删除</a> / <button type=\"button\"  data-toggle=\"modal\" data-target=\"#updata\" onclick=\"saveid("+this.title_id+")\">修改</button>" +
+										  "/ <a href='http://localhost:8080/titlerelation.jsp?title_name=\""+this.title_name+"\"&title_id=\""+this.title_id+"\"'>查看权限</a>" +
+										  "/ <a href='http://localhost:8080/titlerelationAll.jsp?title_name=\""+this.title_name+"\&title_id=\""+this.title_id+"\"'>修改权限</a></td>"
                                       $("#tb").append(html);
                                   });
                               }
@@ -225,8 +216,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						alert("错误");
                     },
     	            success : function(data){
-
-                             alert("添加返回的函数"+data["data"])
                              if(data["data"]==1){
                                  $("#insert").modal("hide");
                                  location.reload(true);
@@ -239,7 +228,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     	function Delete(id){
     	    var titleid = id;
-    	    alert("menu_id :"+titleid+"--"+"id :"+id);
 
     	    $.ajax({
                 url : "/title/deleteTitle.do",
@@ -257,7 +245,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		function saveid(id) {
             titleId = id;
-			alert(titleId);
             $.ajax({
                 url : "/title/titleSelectName.do",
                 data : {
@@ -282,8 +269,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             var name = $("#updataTitle_name").val();
             var state = $("#updata_state").val();
 
-            alert("name :"+name+"--"+"state :"+state);
-
             $.ajax({
                 url : "/title/updataTitle.do",
                 data :{
@@ -294,7 +279,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 type:"post",
                 dataType:"json",
                 success :function(data){
-                    alert("修改的返回值"+data["data"])
                     if(data["data"]==1){
 						alert("修改成功");
                         $("#updata").modal("hide");
@@ -306,23 +290,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             })
         }
 
-		function menuName(){
-            $.ajax({
-                url : "/test/MenuName.do",
-                type:"post",
-                dataType:"json",
-                success :function(data){
-                    $("#menu_lastname").empty();
-                    $(data).each(
-                        function(){
-                            var html = "";
-                            html+= "<option value=\"this.menu_name\">"+this.menu_name+"</option>";
-                            $("#menu_lastname").append(html);
-                        }
-                    )
-                }
-            })
-        }
+
     	</script>
   </body>
 </html>

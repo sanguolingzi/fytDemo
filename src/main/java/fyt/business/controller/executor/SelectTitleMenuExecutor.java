@@ -19,7 +19,7 @@ public class SelectTitleMenuExecutor extends BaseExecutor<Object> {
 
     @Override
     public Object exectueBusiness(HttpServletRequest request, BusinessModel businessModel, Object... obj) {
-
-        return titleService.selectTitleMenu(1);
+        int i = new Integer(request.getParameter("title_id"));
+        return titleService.selectTitleMenu(i);
     }
 }

@@ -101,10 +101,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<input type="radio" id="updata_state" name="menu_state" value="失效">失效</input>
 								</br></br>
 								上级菜单<select id="updata_lastname" name="lastname">
-								<option value="第1级功能">第1级功能</option>
-								<option value="第2级功能">第2级功能</option>
-								<option value="第3级功能">第3级功能</option>
-								<option value="第4级功能">第4级功能</option>
+
 							</select>
 								</br>
 								<div align="right">
@@ -150,21 +147,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		
     		$("#insertButton").click(function(){
     			if($("#insertmenu_name").val()!=""&&$("#menu_lastname").val()!=""&&$("#insertmenu_location").val()!=""&&$("#menu_state").val()!=""){
-    			    alert("进入添加函数")
     				Insert();
     			}else{
     				alert("必须全部填写完");
     			}
     		});
+			menuName();
 
-    		$("#menu_lastname").click(function(){
-    		    menuname++
-                if(menuname==1){
-                    menuName();
-				}else{
-                    menuname=0;
-				}
-			})
 
 			$("#updataButton").click(function(){
 			    if($("#updatamenu_name").val()!=""&&$("#updatamenu_lastname").val()!=""&&$("#updatamenu_location").val()!=""&&$("#updatamenu_state").val()!=""){
@@ -245,9 +234,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		var lastname = $("#menu_lastname").val();
     		var location = $("#insertmenu_location").val();
     		var state = $("#menu_state").val();
-    		alert("name :"+name+"--" 
-			+"lastname :"+lastname+"--"+"location :"+location+"--"+"state :"+state);
-    		
+
     		$.ajax({
     			 url : "/test/Insert.do",
     	            data : {
@@ -277,7 +264,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     	function Delete(id){
     	    var menuid = id;
-    	    alert("menu_id :"+menuid+"--"+"id :"+id);
 
     	    $.ajax({
                 url : "/test/Delete.do",
@@ -295,7 +281,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		function saveid() {
 			menuid = arguments[0];
-			alert(menuid);
 			$.ajax({
 				url : "/test/menuSelectAll.do",
 				data : {
@@ -323,9 +308,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             var lastname = $("#updata_lastname").val();
             var location = $("#updatamenu_location").val();
             var state = $("#updata_state").val();
-
-            alert("name :"+name+"--"
-                +"lastname :"+lastname+"--"+"location :"+location+"--"+"state :"+state+"menu_id :"+menuid);
 
             $.ajax({
                 url : "/test/Updata.do",
@@ -356,12 +338,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 type:"post",
                 dataType:"json",
                 success :function(data){
-                    $("#menu_lastname").empty();
                     $(data).each(
                         function(){
                             var html = "";
                             html+= "<option value=\""+this.menu_name+"\">"+this.menu_name+"</option>";
                             $("#menu_lastname").append(html);
+                            $("#updata_lastname").append(html);
 						}
 					)
 				}
