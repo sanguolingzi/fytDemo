@@ -5,6 +5,29 @@ import fyt.business.core.hash.TestHash;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+
+/**
+ * 增加节点数据迁移规则
+ *
+ * 举例
+ * 有一个hash环 实际节点有3个 A  B  C
+ * 在不增加虚拟节点的情况下  整个hash环被分为3个部分 数据会根据hash值 随机分配到3个hash段
+ * A-B B-C C-A  本例代码中取的是顺时针下第一个节点 那么
+ * A-B 实际上是分配在B 节点
+ * B-C 实际上是分配在C 节点
+ * C-A 实际上是分配在A 节点
+ * 若此时 增加一个节点 D  经过计算 导致 hash环节点分配如下 A  B  D  C
+ * hash环被分成 A-B  B-D  D-C  C-A
+ * 此情况下 则需要迁移 原先 属于B-C hash段的数据
+ *
+ * 找出 hash值 在 B-D之间的数据 将该部分数据从节点C迁移到节点D 即可
+ *
+ *
+ *
+ *
+ */
+
+
 public class TestAddHash extends TestHash{
 
     //定义实际节点
