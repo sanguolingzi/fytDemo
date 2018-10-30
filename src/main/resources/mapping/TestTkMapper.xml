@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="fyt.business.mapper.TestTkMapper">
+
+    <insert id="insertTestAdd" parameterType="map" >
+        insert into test_add_${paraMap.sufix}
+        (hash_value,hash_key)
+        values(#{paraMap.hashValue},#{paraMap.hashId})
+    </insert>
 </mapper>

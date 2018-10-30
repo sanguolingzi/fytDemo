@@ -16,9 +16,9 @@ public class TestTemlateController {
 
 
     @RequestMapping(value="testTemplate.do")
-    public Object testTemplate(HttpServletRequest request, BusinessModel businessModel){
+    public Object testTemplate(HttpServletRequest request, BusinessModel businessModel,String hashId){
         BaseExecutor executor = SpringContextUtil.getBean("testExecutor");
-        return executor.execute(request,businessModel);
+        return executor.execute(request,businessModel,hashId);
     }
 
     @RequestMapping(value="addTk.do")

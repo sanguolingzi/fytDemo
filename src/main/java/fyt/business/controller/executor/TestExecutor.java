@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Component
 public class TestExecutor extends BaseExecutor<String> {
 
@@ -17,6 +20,9 @@ public class TestExecutor extends BaseExecutor<String> {
     @Override
     public String exectueBusiness(HttpServletRequest request, BusinessModel businessModel, Object... obj) throws Exception {
         //testTkServiceImpl.testTransaction();
+        Map<String,Object> map = new HashMap<>();
+        map.put("hashId",obj[0].toString());
+        testTkServiceImpl.insertTestAdd(map);
         return "success";
     }
 }

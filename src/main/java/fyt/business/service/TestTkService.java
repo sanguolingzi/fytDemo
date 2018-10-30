@@ -3,6 +3,8 @@ package fyt.business.service;
 import fyt.business.pojo.TestTk;
 
 import java.util.List;
+import java.util.Map;
+
 
 public interface TestTkService {
 
@@ -15,4 +17,6 @@ public interface TestTkService {
     public List<TestTk> selectAll(TestTk testTk);
 
     public void testTransaction() throws Exception;
+
+    void insertTestAdd(Map<String,Object> paraMap);
 }

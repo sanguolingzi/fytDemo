@@ -1,5 +1,6 @@
 package fyt.business.service.impl;
 
+import fyt.business.core.hash.impl.TestAddHash;
 import fyt.business.mapper.TestTkMapper;
 import fyt.business.pojo.TestTk;
 import fyt.business.service.TestService;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class TestTkServiceImpl implements TestTkService {
@@ -49,5 +52,20 @@ public class TestTkServiceImpl implements TestTkService {
             throw new Exception("测试事务是否正确!");
 
         testServiceImpl.testInsert("ak");
+    }
+
+    @Override
+    public void insertTestAdd(Map<String, Object> paraMap) {
+
+        TestAddHash testAddHash = new TestAddHash();
+
+        String str = paraMap.get("hashId").toString();
+
+        int hash = testAddHash.getHash(str);
+
+        paraMap.put("sufix",testAddHash.getValue(str));
+        paraMap.put("hashValue",hash);
+
+        testTkMapper.insertTestAdd(paraMap);
     }
 }
