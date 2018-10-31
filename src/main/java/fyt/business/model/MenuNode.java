@@ -2,82 +2,88 @@ package fyt.business.model;
 
 import fyt.business.model.base.PageModel;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Table(name = "menu")
 public class MenuNode extends PageModel {
+    @Id
+    @Column(name = "menu_id")
+    private Integer menuId;
 
-    private Integer menu_id ;
-    private String menu_name;
-    private Integer menu_lastid;
-    private String menu_lastname;
-    private String menu_location;
-    private String menu_state;
-    private Integer menu_delect;
+    @Column(name = "menu_name")
+    private String menuName;
 
-    public Integer getMenu_id() {
-        return menu_id;
+    @Column(name = "menu_lastid")
+    private Integer menuLastid;
+
+    @Column(name = "menu_lastname")
+    private String menuLastname;
+
+    @Column(name = "menu_location")
+    private String menuLocation;
+
+    @Column(name = "menu_state")
+    private String menuState;
+
+    @Column(name = "menu_delete")
+    private Integer menuDelete;
+
+
+    public Integer getMenuId() {
+        return menuId;
     }
 
-    public void setMenu_id(Integer menu_id) {
-        this.menu_id = menu_id;
+    public void setMenuId(Integer menuId) {
+        this.menuId = menuId;
     }
 
-    public String getMenu_name() {
-        return menu_name;
+    public String getMenuName() {
+        return menuName;
     }
 
-    public void setMenu_name(String menu_name) {
-        this.menu_name = menu_name;
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
     }
 
-    public Integer getMenu_lastid() {
-        return menu_lastid;
+    public Integer getMenuLastid() {
+        return menuLastid;
     }
 
-    public void setMenu_lastid(Integer menu_lastid) {
-        this.menu_lastid = menu_lastid;
+    public void setMenuLastid(Integer menuLastid) {
+        this.menuLastid = menuLastid;
     }
 
-    public String getMenu_lastname() {
-        return menu_lastname;
+    public String getMenuLastname() {
+        return menuLastname;
     }
 
-    public void setMenu_lastname(String menu_lastname) {
-        this.menu_lastname = menu_lastname;
+    public void setMenuLastname(String menuLastname) {
+        this.menuLastname = menuLastname;
     }
 
-    public String getMenu_location() {
-        return menu_location;
+    public String getMenuLocation() {
+        return menuLocation;
     }
 
-    public void setMenu_location(String menu_location) {
-        this.menu_location = menu_location;
+    public void setMenuLocation(String menuLocation) {
+        this.menuLocation = menuLocation;
     }
 
-    public String getMenu_state() {
-        return menu_state;
+    public String getMenuState() {
+        return menuState;
     }
 
-    public void setMenu_state(String menu_state) {
-        this.menu_state = menu_state;
+    public void setMenuState(String menuState) {
+        this.menuState = menuState;
     }
 
-    public Integer getMenu_delect() {
-        return menu_delect;
+    public Integer getMenuDelete() {
+        return menuDelete;
     }
 
-    public void setMenu_delect(Integer menu_delect) {
-        this.menu_delect = menu_delect;
-    }
-
-    @Override
-    public String toString() {
-        return "MenuNode{" +
-                "menu_id=" + menu_id +
-                ", menu_name='" + menu_name + '\'' +
-                ", menu_lastid=" + menu_lastid +
-                ", menu_lastname='" + menu_lastname + '\'' +
-                ", menu_location='" + menu_location + '\'' +
-                ", menu_state='" + menu_state + '\'' +
-                ", menu_delect=" + menu_delect +
-                '}';
+    public void setMenuDelete(Integer menuDelete) {
+        this.menuDelete = menuDelete;
     }
 }

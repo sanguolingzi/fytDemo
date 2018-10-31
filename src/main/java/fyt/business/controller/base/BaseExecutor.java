@@ -54,6 +54,7 @@ public class BaseExecutor<T> extends AbstractExecutor<T> {
                     errorInfo.setErrorMsg(((BusinessException)e).getMsg());
                 }
             }else{
+                e.printStackTrace();
                 errorInfo = new ErrorInfo();
                 errorInfo.setErrorCode("error");
                 errorInfo.setErrorMsg("系统异常!");

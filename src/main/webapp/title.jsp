@@ -28,10 +28,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
   		</br>
-  		<button type="button"  data-toggle="modal" data-target="#insert">
+  		<button type="button"  data-toggle="modal" data-target="#insertTitle">
 		  	添加
 		</button>
-    	<table id="tbl" border="1" style="width: 100%">
+    	<table id="titletable" border="1" style="width: 100%">
     	<thead>
 	  		<tr>
 	  			<th>权限编号</th>
@@ -40,14 +40,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  			<th>操作</th>
 	  		</tr>
   		</thead>
-	  		<tbody id="tb">
+	  		<tbody id="titletable1">
 			</tbody>
 	   </table>
 
 	   	<div id="Pagination"></div>
  	
 	
-	<div class="modal fade" id="insert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade" id="insertTitle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -76,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
   </div>
 
-		<div class="modal fade" id="updata" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal fade" id="updataTitle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -101,7 +101,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			</div>
 		</div>
-	
+
+		<div class="modal fade" id="showTitle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="UpdatatitleModalLabel">权限修改</h4>
+					</div>
+					<div class="modal-body">
+						<div>
+							<from>权限名称: <span id="updatatitleName"></span></br>
+								<hr>
+								<table id="UpdatatitleTable" border="0" style="width: 100%">
+
+								</table>
+								<div align="right">
+									<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+									<input type="button" class="btn btn-default" id="updatatitleButton" value="修改"></input>
+								</div>
+							</from>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
     <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/jquery.pagination.js"></script>
     <script type="text/javascript">
     	//定义一页显示多少行数据
@@ -113,7 +137,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     	var titleId = 0;
     	var menuname=0;
-    	
+		var updataMenuTitleId=0;
     	 $(document).ready(function() {
     	        //初始化分页，展示分页信息并动态获取总数据条数、每页展示条数
 	        		initPagination(pageIndex);
@@ -145,7 +169,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     alert("必须全部填写完");
 				}
             })
-    	
+
+			$("#updatatitleButton").click(function(){
+                var titleid = updataMenuTitleId
+                var Arr = new Array();
+                $.each($('input:checkbox:checked'),function(i){
+                    Arr[i] = $(this).val();
+                });
+
+                $.ajax({
+                        url:"/title/insertTitleMenu.do",
+                        data:{Arr:Arr,
+                            titleId :titleid
+                        },
+                        type:"post",
+                        dataType:"json",
+                        traditional: true,
+                        success:function(data){
+                            if(data["data"]==1){
+                                alert("提交成功");
+                                window.location.reload(true);
+                            }else {
+                                alert("提交失败");
+                            }
+                        }
+                    }
+                )
+            });
+
 	        function pageselectCallback(page_index, jq) {
                     initPagination(page_index);
     		}
@@ -164,7 +215,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             dataType : "json",
             async : false,
             success : function(data){
-            	$("#tb").empty();
+            	$("#titletable1").empty();
                 if (!$.isEmptyObject(data)) {
                   for(var key in data){
                       if(key =="data"){
@@ -178,10 +229,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                       html+= "<td>"+this.title_id+"</td>";
                                       html+= "<td>"+this.title_name+"</td>";
                                       html+= "<td>"+this.title_state+"</td>";
-                                      html+= "<td><a href=\"#\" onclick=\"Delete("+this.title_id+")\">删除</a> / <button type=\"button\"  data-toggle=\"modal\" data-target=\"#updata\" onclick=\"saveid("+this.title_id+")\">修改</button>" +
-										  "/ <a href='http://localhost:8080/titlerelation.jsp?title_name=\""+this.title_name+"\"&title_id=\""+this.title_id+"\"'>查看权限</a>" +
-										  "/ <a href='http://localhost:8080/titlerelationAll.jsp?title_name=\""+this.title_name+"\&title_id=\""+this.title_id+"\"'>修改权限</a></td>"
-                                      $("#tb").append(html);
+                                      html+= "<td><a href=\"#\" onclick=\"Delete("+this.title_id+")\">删除</a> / <button type=\"button\"  data-toggle=\"modal\" data-target=\"#updataTitle\" onclick=\"saveid("+this.title_id+")\">修改</button>" +
+										  "/ <button type=\"button\"  data-toggle=\"modal\" data-target=\"#showTitle\" onclick=\"updataTitle("+this.title_id+")\">修改权限</button></td>"
+                                      $("#titletable1").append(html);
                                   });
                               }
                           }
@@ -290,7 +340,57 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             })
         }
 
-
+		function updataTitle (id) {
+            updataMenuTitleId = id;
+            $.ajax({
+                url : "/title/selectMenu.do",
+                data:{
+                    "titleId": id
+                },
+                type:"post",
+                dataType:"json",
+                success :function(data){
+                    $("#UpdatatitleTable").empty();
+                    if (!$.isEmptyObject(data)){
+                        for(var key in data){
+                            if(key =="data"){
+                                var Data = data[key];
+                                var num=0;
+                                for(var i=0;i<Data.length;i++){
+                                    var Data2 = Data[i];
+                                    var html="";
+                                    var html2="";
+                                    for(var key in Data2){
+                                        num=0;
+                                        if(key=="menu_name"){
+                                            html+="<tr>";
+                                            html+="<td>"+Data2[key]+"</td>";
+                                            html+="</tr>"
+                                            $("#UpdatatitleTable").append(html);
+                                        }else if(key=="SubmenuList"){
+                                            html2+="<tr><td>"
+                                            $(Data2[key]).each(function(){
+                                                if(this.checked==1){
+                                                    html2+="<input id=\"menuchoose\" type=\"checkbox\" checked=\"true\" value=\""+this.menu_id+"\">"+this.menu_name+" "
+												}else {
+                                                    html2+="<input id=\"menuchoose\" type=\"checkbox\" value=\""+this.menu_id+"\">"+this.menu_name+" "
+												}
+												num++;
+                                            })
+                                            html2+="</td></tr>"
+                                        }else if(key=="title_name"){
+                                            $("#updatatitleName").empty();
+                                            $("#updatatitleName").append(Data2[key]);
+										}
+                                    }
+                                    $("#UpdatatitleTable").append(html2);
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+        }
     	</script>
   </body>
 </html>

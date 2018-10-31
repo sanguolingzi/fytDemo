@@ -2,7 +2,7 @@ package fyt.business.model.base;
 
 import java.io.Serializable;
 
-public class PageModel implements Serializable{
+public class PageModel extends BusinessModel{
 
     Integer currentPage = 1;
 

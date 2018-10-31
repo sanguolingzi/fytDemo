@@ -27,14 +27,13 @@ public class TitleServiceImpl implements TitleService
         PageHelper.startPage(titlePojo.getCurrentPage(),titlePojo.getPageSize());
         Map<String,Object> paraMap = new HashMap();
         List<Map<String,Object>> list = mapper.selectTitle(paraMap);
-        System.out.println(list);
         PageInfo pageInfo = new PageInfo(list);
         PageData<Map<String,Object>> pageData = new PageData(pageInfo.getTotal(),pageInfo.getList());
         return pageData;
     }
 
     @Override
-    public List<Map<String, Object>> selectTitleName(String title_id) {
+    public List<Map<String, Object>> selectTitleName(int title_id) {
         Map<String,Object> paraMap = new HashMap();
         paraMap.put("title_id",title_id);
         List<Map<String,Object>> list = mapper.selectTitleName(paraMap);
@@ -48,8 +47,6 @@ public class TitleServiceImpl implements TitleService
         List<Map<String,Object>> list = mapper.selectTitleMenu(paraMap);
         for(Map<String, Object> map:list){
             int menu_id = (int)(map.get("menu_id"));
-            System.out.println(menu_id);
-            System.out.println(mapper.selectSubmenu(menu_id));
             map.put("SubmenuList",mapper.selectSubmenu(menu_id));
         }
         return list;
@@ -88,10 +85,16 @@ public class TitleServiceImpl implements TitleService
         List<Map<String,Object>> list = mapper.selectTitleMenuAll(paraMap);
         for(Map<String, Object> map:list){
             int menu_id = (int)(map.get("menu_id"));
-            System.out.println(menu_id);
-            System.out.println(mapper.selectSubmenuAll(menu_id));
             map.put("SubmenuList",mapper.selectSubmenuAll(menu_id));
         }
         return list;
+
+    }
+
+    @Override
+    public List<Map<String, Object>> selectMenuid(int i) {
+        Map<String, Object> paraMap = new HashMap();
+        paraMap.put("title_id",i);
+        return mapper.selectTitleMenu(paraMap);
     }
 }

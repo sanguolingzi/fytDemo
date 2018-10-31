@@ -2,7 +2,7 @@ package fyt.business.controller.executor;
 
 import fyt.business.controller.base.BaseExecutor;
 import fyt.business.model.base.BusinessModel;
-import fyt.business.pojo.TitlePojo;
+import fyt.business.service.TestService;
 import fyt.business.service.TitleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 
 @Component
-public class SelectTitleNameExecutor extends BaseExecutor<Object> {
-
+public class DeleteMenuExecutor extends BaseExecutor<Object> {
     @Autowired
-    private TitleService titleService;
+    private TestService testServiceImpl;
 
     @Override
-    public Object exectueBusiness(HttpServletRequest request, BusinessModel businessModel, Object... obj) {
-        int i = new Integer(request.getParameter("title_id"));
-        return titleService.selectTitleName(i);
+    public Object exectueBusiness(HttpServletRequest request, BusinessModel businessModel,Object ... obj) {
+        int id = new Integer(request.getParameter("menuId"));
+        return testServiceImpl.menuDelete(id);
     }
 }
+

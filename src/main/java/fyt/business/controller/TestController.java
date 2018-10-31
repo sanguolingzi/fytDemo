@@ -1,18 +1,23 @@
 package fyt.business.controller;
 
+import fyt.business.controller.base.BaseExecutor;
 import fyt.business.core.annotation.ResultBeanResponseBody;
+import fyt.business.core.listener.SpringContextUtil;
 import fyt.business.model.MenuNode;
 import fyt.business.model.TestModel;
+import fyt.business.model.base.BusinessModel;
 import fyt.business.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
-@Controller
+@RestController()
 @RequestMapping("test")
 public class TestController {
 
@@ -57,35 +62,35 @@ public class TestController {
         return "testUpdate";
     }
 
-    @RequestMapping("menuSelectAll.do")
-    @ResponseBody
-    public Object menuSelectAll(String menu_name,String menu_lastid,String menu_id,MenuNode menuNode){
-        return testServiceImpl.menuSelectAll(menu_name,menu_lastid,menu_id,menuNode);
-    }
+    /*@RequestMapping(value="menuSelectAll.do")
+    public Object selectTitle(HttpServletRequest request, BusinessModel businessModel){
+        BaseExecutor executor = SpringContextUtil.getBean("menuSelectAll");
+        return executor.execute(request,businessModel);
+    }*/
 
-    @RequestMapping("Insert.do")
+    /*@RequestMapping("Insert.do")
     @ResponseBody
     public Object InsertMenu(String menu_name,String menu_lastname,String menu_location,String menu_state){
         return  testServiceImpl.menuInsert(menu_name,menu_lastname,menu_location,menu_state);
-    }
+    }*/
 
-    @RequestMapping("Delete.do")
+    /*@RequestMapping("Delete.do")
     @ResponseBody
     public Object menuDelete(String menu_id){
         int id = new Integer(menu_id);
         return testServiceImpl.menuDelete(id);
-    }
+    }*/
 
-    @RequestMapping("Updata")
+    /*@RequestMapping("Updata")
     @ResponseBody
     public Object menuUpdata(String menu_name,String menu_lastname,String menu_location,String menu_state,String menu_id){
         int id = new Integer(menu_id);
         return  testServiceImpl.menuUpdata(menu_name,menu_lastname,menu_location,menu_state,id);
-    }
+    }*/
 
-    @RequestMapping("MenuName")
+    /*@RequestMapping("MenuName")
     @ResponseBody
     public Object menuName(){
         return testServiceImpl.menuName(new HashMap());
-    }
+    }*/
 }

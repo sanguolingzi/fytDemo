@@ -29,10 +29,11 @@
         <if test="menu_id !=null and menu_id !=''">
             and menu_id =#{menu_id}
         </if>
+        ORDER BY menu_lastid
     </select>
 
     <insert id="menuInsert" parameterType="java.util.Map">
-        INSERT into menu(menu_name,menu_lastid,menu_lastname,menu_location,menu_state,menu_delete) VALUES(#{name},#{lastid},#{lastname},#{location},#{state},1)
+        INSERT into menu(menu_name,menu_lastid,menu_lastname,menu_location,menu_state,menu_delete) VALUES(#{menu_name},#{menu_lastid},#{menu_lastname},#{menu_location},#{menu_state},1)
     </insert>
 
     <update id="menuUpdata" parameterType="java.util.Map">
@@ -48,6 +49,6 @@
     </select>
 
     <select id="selectMenuName" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT menu_name from menu where menu_delete=1 ORDER BY menu_id
+        SELECT menu_name from menu where menu_delete=1 and menu_lastid = -1 ORDER BY menu_id
     </select>
 </mapper>

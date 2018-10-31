@@ -48,30 +48,21 @@ public class TestServiceImpl implements TestService{
     }
 
     @Override
-    public PageData menuSelectAll(String menu_name,String menu_lastid,String menu_id,MenuNode menuNode) {
-        PageHelper.startPage(menuNode.getCurrentPage(),menuNode.getPageSize());
-        Map<String,Object> paraMap = new HashMap();
-        paraMap.put("menu_name",menu_name);
-        paraMap.put("menu_lastid",menu_lastid);
-        paraMap.put("menu_id",menu_id);
+    public List<Map<String,Object>> menuSelectAll(Map<String,Object> paraMap) {
         List<Map<String,Object>> list = customerBusiMapper.menuSelect(paraMap);
-        PageInfo pageInfo = new PageInfo(list);
-        PageData<Map<String,Object>> pageData = new PageData(pageInfo.getTotal(),pageInfo.getList());
-        return pageData;
+        return list;
     }
 
     @Override
-    public int menuInsert(String menu_name, String menu_lastname, String menu_location, String menu_state) {
-        int lastid = customerBusiMapper.selectId(menu_lastname);
-
-        Map<String,Object> param = new HashMap<>();
-        param.put("name", menu_name);
-        param.put("lastid", lastid);
-        param.put("lastname", menu_lastname);
-        param.put("location", menu_location);
-        param.put("state", menu_state);
+    public int menuInsert(Map<String,Object> paraMap) {
+        int lastid =-1;
+        if (paraMap.get("menu_lastname")!=""&&paraMap.get("menu_lastname")!=null){
+            String lastname = (String) paraMap.get("menu_lastname");
+            lastid = customerBusiMapper.selectId(lastname);
+        }
+        paraMap.put("menu_lastid",lastid);
         try {
-            return customerBusiMapper.menuInsert(param);
+            return customerBusiMapper.menuInsert(paraMap);
         }catch (Exception e){
             e.getMessage();
             return 0;
@@ -79,16 +70,14 @@ public class TestServiceImpl implements TestService{
     }
 
     @Override
-    public int menuUpdata(String menu_name,String menu_lastname,String menu_location,String menu_state,int menu_id) {
-        int lastid = customerBusiMapper.selectId(menu_lastname);
-        Map<String,Object> param = new HashMap<>();
-        param.put("menu_name", menu_name);
-        param.put("menu_lastid", lastid);
-        param.put("menu_lastname", menu_lastname);
-        param.put("menu_location", menu_location);
-        param.put("menu_state", menu_state);
-        param.put("menu_id", menu_id);
-        return customerBusiMapper.menuUpdata(param);
+    public int menuUpdata(Map<String,Object> paraMap) {
+        int lastid =-1;
+        if (paraMap.get("menu_lastname")!=""&&paraMap.get("menu_lastname")!=null){
+            String lastname = (String) paraMap.get("menu_lastname");
+            lastid = customerBusiMapper.selectId(lastname);
+        }
+        paraMap.put("menu_lastid",lastid);
+        return customerBusiMapper.menuUpdata(paraMap);
     }
 
     @Override

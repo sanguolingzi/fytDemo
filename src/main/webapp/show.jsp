@@ -70,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	<input type="radio" id="menu_state" name="menu_state" value="失效">失效</input>
         	</br></br>
         	上级菜单<select id="menu_lastname" name="lastname">
-
+					<option value="">最上级功能</option>
 				  </select>
 				  </br>
 				  <div align="right">
@@ -146,7 +146,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	    });
     		
     		$("#insertButton").click(function(){
-    			if($("#insertmenu_name").val()!=""&&$("#menu_lastname").val()!=""&&$("#insertmenu_location").val()!=""&&$("#menu_state").val()!=""){
+    			if($("#insertmenu_name").val()!=""&&$("#insertmenu_location").val()!=""&&$("#menu_state").val()!=""){
     				Insert();
     			}else{
     				alert("必须全部填写完");
@@ -185,13 +185,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var name = menu_name;
 		var lastid = menu_lastid;
         $.ajax({
-            url : "/test/menuSelectAll.do",
+            url : "/menu/menuSelectAll.do",
             data : {
                 currentPage : page_index+1,
                 pageSize : page_size,
                 totalSize : total_size,
-				menu_name :	name,
-				menu_lastid : lastid
+				menuName :	name,
+				menuLastid : lastid
             },
             type : "post",
             dataType : "json",
@@ -199,8 +199,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             success : function(data){
             	$("#tb").empty();
                 if (!$.isEmptyObject(data)) {
-                  var Data=data;
-                  for(var key in Data) { 
+                  var Data=data["data"];
+                  for(var key in Data) {
                        if(key=="totalRecord"){
                        		total_size = Data[key];
                        }  else if(key=="listData"){
@@ -236,12 +236,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		var state = $("#menu_state").val();
 
     		$.ajax({
-    			 url : "/test/Insert.do",
+    			 url : "/menu/insertMenu.do",
     	            data : {
-    	                menu_name:name,
-    	                menu_lastname:lastname,
-    	                menu_location:location,
-    	                menu_state:state
+    	                menuName:name,
+    	                menuLastname:lastname,
+    	                menuLocation:location,
+    	                menuState:state
     	            },
     	            type : "post",
     	            dataType : "json",
@@ -251,10 +251,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						alert("错误");
                     },
     	            success : function(data){
-    			     alert("添加返回的函数"+data)
-    	            	if(data==1){
-    	            		alert(data);
-    	            		$("#insert").modal("hide");
+    	            	if(data["data"]=1){
+    	            	    alert("新增成功")
+                            window.location.reload(true);
     	            	}else{
     	            		alert("失败，功能名重复了");
     	            	}
@@ -266,15 +265,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	    var menuid = id;
 
     	    $.ajax({
-                url : "/test/Delete.do",
+                url : "/menu/deleteMenu.do",
 				data :{
-                    "menu_id" : menuid
+                    "menuId" : menuid
 				},
 				type:"post",
 				dataType:"json",
                 success :function(data){
-                    alert("返回值:"+data);
-                    location.reload(true);
+                    if(data["data"]==1){
+                        alert("删除成功")
+                        location.reload(true);
+					}else {
+                        alert("删除失败")
+					}
                 }
 			})
 		}
@@ -282,14 +285,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		function saveid() {
 			menuid = arguments[0];
 			$.ajax({
-				url : "/test/menuSelectAll.do",
+				url : "/menu/menuSelectAll.do",
 				data : {
-				    menu_id:menuid
+				    menuId:menuid
 				},
 				type:"post",
 				dataType:"json",
                 success :function(data){
-					var Data = data;
+					var Data = data["data"];
 					for(var key in Data){
 						if(key == "listData"){
                             $(Data[key]).each(function() {
@@ -310,18 +313,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             var state = $("#updata_state").val();
 
             $.ajax({
-                url : "/test/Updata.do",
+                url : "/menu/updataMenu.do",
                 data :{
-                    menu_name:name,
-                    menu_lastname:lastname,
-                    menu_location:location,
-                    menu_state:state,
-					menu_id:menuid
+                    menuName:name,
+                    menuLastname:lastname,
+                    menuLocation:location,
+                    menuState:state,
+					menuId:menuid
                 },
                 type:"post",
                 dataType:"json",
                 success :function(data){
-                    if(data==1){
+                    if(data["data"]==1){
 						alert("修改成功");
                         $("#updata").modal("hide");
                         window.location.reload();
@@ -334,11 +337,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 		function menuName(){
     	    $.ajax({
-                url : "/test/MenuName.do",
+                url : "/menu/menuName.do",
                 type:"post",
                 dataType:"json",
                 success :function(data){
-                    $(data).each(
+                    $(data["data"]).each(
                         function(){
                             var html = "";
                             html+= "<option value=\""+this.menu_name+"\">"+this.menu_name+"</option>";

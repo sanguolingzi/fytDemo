@@ -17,12 +17,11 @@ public interface TestService {
 
     PageData testPageSelect(TestModel testModel);
 
-    PageData menuSelectAll(String menu_name,String menu_lastid,String menu_id,MenuNode menuNode);
+    List<Map<String,Object>> menuSelectAll(Map<String,Object> paraMap);
 
+    int menuInsert(Map<String,Object> paraMap);
 
-    int menuInsert(String menu_name,String menu_lastname,String menu_location,String menu_state);
-
-    int menuUpdata(String menu_name,String menu_lastname,String menu_location,String menu_state,int menu_id);
+    int menuUpdata(Map<String,Object> paraMap);
 
     int menuDelete(int menu_id);
 
