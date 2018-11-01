@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		   </tbody>
 	   </table>
 
-	   	<div id="Pagination"></div>
+	   	<div id="PaginationTb"></div>
  	
 	
 	<div class="modal fade" id="insert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -131,10 +131,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	
     	 $(document).ready(function() {
     	        //初始化分页，展示分页信息并动态获取总数据条数、每页展示条数
-	        		initPagination(pageIndex,menu_name,menu_lastid);
+	        		initPaginationTb(pageIndex,menu_name,menu_lastid);
     	        //初始化分页插件
-    	        $("#Pagination").pagination(total_size, {
-    	            callback : pageselectCallback,
+    	        $("#PaginationTb").pagination(total_size, {
+    	            callback : pageselectCallbackTb,
     	            prev_text : '上一页',
     	            next_text : '下一页',
     	            link_to : 'javascript:void(0);',//分页的链接,默认“#”
@@ -164,9 +164,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             })
     	 
     		$("#where").click(function(){
-				initPagination(pageIndex,$("#menu_name").val(),$("#menu_lastid").val());
-                $("#Pagination").pagination(total_size, {
-                    callback : pageselectCallback,
+				initPaginationTb(pageIndex,$("#menu_name").val(),$("#menu_lastid").val());
+                $("#PaginationTb").pagination(total_size, {
+                    callback : pageselectCallbackTb,
                     prev_text : '上一页',
                     next_text : '下一页',
                     link_to : 'javascript:void(0);',//分页的链接,默认“#”
@@ -177,11 +177,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 });
     		});
     	
-	        function pageselectCallback(page_index, jq) {
-                    initPagination(page_index,$("#menu_name").val(),$("#menu_lastid").val());
+	        function pageselectCallbackTb(page_index, jq) {
+                    initPaginationTb(page_index,$("#menu_name").val(),$("#menu_lastid").val());
     		}
 	        
-    	function initPagination(page_index,menu_name,menu_lastid) {
+    	function initPaginationTb(page_index,menu_name,menu_lastid) {
 		var name = menu_name;
 		var lastid = menu_lastid;
         $.ajax({
