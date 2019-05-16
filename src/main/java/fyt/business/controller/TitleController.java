@@ -48,9 +48,9 @@ public class TitleController {
         return executor.execute(request,businessModel);
     }
 
-    @RequestMapping(value="updataTitle.do")
-    public Object updataTitle(HttpServletRequest request, BusinessModel businessModel){
-        BaseExecutor executor = SpringContextUtil.getBean("updataTitleExecutor");
+    @RequestMapping(value="updateTitle.do")
+    public Object updateTitle(HttpServletRequest request, BusinessModel businessModel){
+        BaseExecutor executor = SpringContextUtil.getBean("updateTitleExecutor");
         return executor.execute(request,businessModel);
     }
 

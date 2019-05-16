@@ -97,8 +97,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								菜单名称<input type="text" id="updatamenu_name"></br></br>
 								菜单链接<input type="text" id="updatamenu_location">
 								</br></br>
-								<input type="radio" id="updata_state" name="menu_state" checked="checked" value="正常">正常</input>
-								<input type="radio" id="updata_state" name="menu_state" value="失效">失效</input>
+								<input type="radio" id="updata_state" name="Menu_state" checked="checked" value="正常">正常</input>
+								<input type="radio" id="updata_state" name="Menu_state" value="失效">失效</input>
 								</br></br>
 								上级菜单<select id="updata_lastname" name="lastname">
 
@@ -191,7 +191,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 pageSize : page_size,
                 totalSize : total_size,
 				menuName :	name,
-				menuLastid : lastid
+                menuLastid : lastid
             },
             type : "post",
             dataType : "json",
@@ -233,7 +233,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		var name = $("#insertmenu_name").val();
     		var lastname = $("#menu_lastname").val();
     		var location = $("#insertmenu_location").val();
-    		var state = $("#menu_state").val();
+    		var state = $("input[name='menu_state']:checked").val();
 
     		$.ajax({
     			 url : "/menu/insertMenu.do",
@@ -310,7 +310,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             var name = $("#updatamenu_name").val();
             var lastname = $("#updata_lastname").val();
             var location = $("#updatamenu_location").val();
-            var state = $("#updata_state").val();
+            var state = $("input[name='Menu_state']:checked").val();
 
             $.ajax({
                 url : "/menu/updataMenu.do",

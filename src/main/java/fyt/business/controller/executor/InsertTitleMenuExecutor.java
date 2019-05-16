@@ -23,23 +23,32 @@ public class InsertTitleMenuExecutor extends BaseExecutor<Object> {
         String [] str = request.getParameterValues("Arr");
         List<Map<String,Object>> list2 = titleService.selectMenuid(id);
         int end=0;
-        for (int i=0;i<str.length;i++){
-            int num = 0;
-            for(Map<String,Object> M : list2){
-                int j = new Integer(str[i]);
-                int k = (int)M.get("menu_id");
-                if(j==k){
-                    break;
+        System.out.println(list2.size());
+        if(list2.size()!=0){
+            for (int i=0;i<str.length;i++){
+                int num = 0;
+                for(Map<String,Object> M : list2){
+                    int j = new Integer(str[i]);
+                    int k = (int)M.get("menu_id");
+                    if(j==k){
+                        break;
+                    }
+                    num++;
+                    if(num == list2.size()){
+                        paraMap.put("title_id",id);
+                        paraMap.put("menu_id",str[i]);
+                        end = titleService.insertTitleMenu(paraMap);
+                    }
                 }
-                num++;
-                if(num == list2.size()){
+            }
+        }else{
+            for (int i=0;i<str.length;i++){
                     paraMap.put("title_id",id);
                     paraMap.put("menu_id",str[i]);
                     end = titleService.insertTitleMenu(paraMap);
                 }
-            }
-
         }
+
         return end;
     }
 }

@@ -59,8 +59,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <from>
         	权限名称<input type="text" id="insertTitle_name"></br></br>
         	</br></br>
-        	<input type="radio" id="menu_state" name="menu_state" checked="checked" value="可用">可用</input>
-        	<input type="radio" id="menu_state" name="menu_state" value="失效">失效</input>
+        	<input type="radio" id="menu_state" name="title_state" checked="checked" value="可用">可用</input>
+        	<input type="radio" id="menu_state" name="title_state" value="失效">失效</input>
         	</br></br>
 
 				  </select>
@@ -88,8 +88,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<from>
 								权限名称<input type="text" id="updataTitle_name"></br></br>
 								</br>
-								<input type="radio" id="updata_state" name="menu_state" checked="checked" value="可用">可用</input>
-								<input type="radio" id="updata_state" name="menu_state" value="失效">失效</input>
+								<input type="radio" id="updata_state" name="Ttile_state" checked="checked" value="可用">可用</input>
+								<input type="radio" id="updata_state" name="Title_state" value="失效">失效</input>
 								</br></br>
 								<div align="right">
 									<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -249,9 +249,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	
     	function Insert(){
     		var name = $("#insertTitle_name").val();
-    		var state = $("#menu_state").val();
-    		alert("name :"+name+"--"+"state :"+state);
-    		
+    		var state = $("input[name='title_state']:checked").val();
+
     		$.ajax({
     			 url : "/title/insertTitle.do",
     	            data : {
@@ -317,10 +316,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         
         function Updata() {
             var name = $("#updataTitle_name").val();
-            var state = $("#updata_state").val();
+            var state = $("input[name='Title_state']:checked").val();
 
             $.ajax({
-                url : "/title/updataTitle.do",
+                url : "/title/updateTitle.do",
                 data :{
                     title_name:name,
                     title_state:state,
@@ -355,13 +354,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         for(var key in data){
                             if(key =="data"){
                                 var Data = data[key];
-                                var num=0;
                                 for(var i=0;i<Data.length;i++){
                                     var Data2 = Data[i];
                                     var html="";
                                     var html2="";
                                     for(var key in Data2){
-                                        num=0;
                                         if(key=="menu_name"){
                                             html+="<tr>";
                                             html+="<td>"+Data2[key]+"</td>";
@@ -375,7 +372,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 												}else {
                                                     html2+="<input id=\"menuchoose\" type=\"checkbox\" value=\""+this.menu_id+"\">"+this.menu_name+" "
 												}
-												num++;
                                             })
                                             html2+="</td></tr>"
                                         }else if(key=="title_name"){

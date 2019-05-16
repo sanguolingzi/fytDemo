@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fyt.business.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="fyt.business.pojo.UserPojo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+    <result column="user_phone" jdbcType="BIGINT" property="userPhone" />
+    <result column="user_mail" jdbcType="VARCHAR" property="userMail" />
+    <result column="user_sex" jdbcType="VARCHAR" property="userSex" />
+    <result column="user_delete" jdbcType="INTEGER" property="userDelete" />
+  </resultMap>
+
+  <select id="SelectUser" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT a.user_id,a.user_name,a.user_password,a.user_phone,a.user_mail,a.user_sex FROM userinfo a where a.user_delete =1
+    <if test="user_id !=null and user_id !=''">
+      and user_id = #{user_id}
+    </if>
+  </select>
+
+  <update id="DeleteUser" parameterType="int">
+    UPDATE userinfo a set a.user_delete=0 WHERE a.user_id=#{0}
+  </update>
+  
+  <update id="UpdateUser" parameterType="java.util.Map">
+    UPDATE userinfo a set a.user_name=#{user_name},a.user_password=#{user_password},a.user_phone=#{user_phone},a.user_mail=#{user_mail},a.user_sex=#{user_sex} WHERE a.user_id=#{user_id}
+  </update>
+
+  <!-- 查询全部角色 -->
+  <select id="selectRole" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT role_id,role_name from role where role_delete=1
+  </select>
+
+  <!-- 查询用户对应角色 -->
+  <select id="selectUserRole" parameterType="int" resultType="java.util.Map">
+    SELECT role_id from userrelation where user_id=#{0}
+  </select>
+
+  <insert id="insertUserRole" parameterType="java.util.Map">
+    insert into userrelation(user_id,role_id) VALUES(#{user_id},#{role_id})
+  </insert>
+</mapper>

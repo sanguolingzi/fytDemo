@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class UpdataTitleExecutor extends BaseExecutor<Object> {
+public class UpdateTitleExecutor extends BaseExecutor<Object> {
     @Autowired
     private TitleService titleService;
 
@@ -24,7 +24,7 @@ public class UpdataTitleExecutor extends BaseExecutor<Object> {
         paraMap.put("title_name",title_name);
         paraMap.put("title_state",title_state);
         paraMap.put("title_id",title_id);
-        return titleService.updataTitle(paraMap);
+        return titleService.updateTitle(paraMap);
     }
 }
 

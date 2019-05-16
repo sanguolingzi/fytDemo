@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fyt.business.mapper.RegisterMapper">
+  <resultMap id="BaseResultMap" type="fyt.business.pojo.UserPojo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+    <result column="user_phone" jdbcType="BIGINT" property="userPhone" />
+    <result column="user_mail" jdbcType="VARCHAR" property="userMail" />
+    <result column="user_sex" jdbcType="VARCHAR" property="userSex" />
+    <result column="user_delete" jdbcType="INTEGER" property="userDelete" />
+  </resultMap>
+
+  <select id="selectUserName" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT user_name from userinfo where user_name=#{user_name}
+  </select>
+
+  <select id="selectUserPhone" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT user_phone from userinfo where user_phone=#{user_phone}
+  </select>
+
+  <select id="selectUserMail" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT user_mail from userinfo where user_mail=#{user_mail}
+  </select>
+
+  <insert id="insertUserinfo" parameterType="java.util.Map">
+    INSERT into userinfo(user_name,user_password,user_phone,user_mail,user_sex,user_delete) VALUES(#{user_name},#{user_password},#{user_phone},#{user_mail},#{user_sex},1)
+  </insert>
+</mapper>

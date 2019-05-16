@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class UpdataMenuExecutor extends BaseExecutor<Object> {
+public class UpdateMenuExecutor extends BaseExecutor<Object> {
     @Autowired
     private TestService testServiceImpl;
 

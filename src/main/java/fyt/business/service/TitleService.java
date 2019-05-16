@@ -16,7 +16,7 @@ public interface TitleService
 
     int insertTitle(Map<String,Object> paraMap);
 
-    int updataTitle(Map<String,Object> paraMap);
+    int updateTitle(Map<String,Object> paraMap);
 
     int deleteTitle(int i);
 

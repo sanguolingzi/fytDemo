@@ -21,8 +21,8 @@
         <h1>EasyUI Web Admin</h1>
     </div>
     <div class="wu-header-right">
-        <p><strong class="easyui-tooltip" title="2条未读消息">admin</strong>，欢迎您！</p>
-        <p><a href="#">网站首页</a>|<a href="#">支持论坛</a>|<a href="#">帮助中心</a>|<a href="#">安全退出</a></p>
+        <p><strong class="easyui-tooltip" title="2条未读消息"><%= request.getSession().getAttribute("userName")%></strong>，欢迎您！</p>
+        <p><a href="#">网站首页</a>|<a href="http://localhost:8080/userinfo.jsp">用户个人中心</a>|<a href="#">帮助中心</a>|<a href="#">安全退出</a></p>
     </div>
 </div>
 <!-- end of header -->
@@ -32,7 +32,8 @@
         <div title="快捷菜单" data-options="iconCls:'icon-application-cascade'" style="padding:5px;">
             <ul class="easyui-tree wu-side-tree">
                 <li iconCls="icon-chart-organisation"><a href="javascript:void(0)" data-icon="icon-chart-organisation" data-link="show.jsp" iframe="0">菜单导航</a></li>
-                <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="title.jsp" iframe="0">权限管理</a></li>
+                <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="title.jsp" iframe="0">权限管 理</a></li>
+                <li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="role.jsp" iframe="0">角色管理</a></li>
                 <!--
                 <li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="title.jsp" iframe="0">角色管理</a></li>
                 <li iconCls="icon-book"><a href="javascript:void(0)" data-icon="icon-book" data-link="titlerelation.jsp" iframe="0">数据字典</a></li>

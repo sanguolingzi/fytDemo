@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fyt.business.mapper.RoleMapper">
+  <resultMap id="BaseResultMap" type="fyt.business.pojo.RolePojo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="role_state" jdbcType="VARCHAR" property="roleState" />
+    <result column="role_delete" jdbcType="INTEGER" property="roleDelete" />
+  </resultMap>
+  
+  <select id="SelectRole" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT * from role WHERE role_delete = 1
+  </select>
+
+  <update id="UpdateRole" parameterType="java.util.Map">
+    UPDATE role set role_name=#{role_name},role_state=#{role_state} where role_id = #{role_id}
+  </update>
+
+  <update id="DeleteRole" parameterType="int">
+    UPDATE role set role_delete = 0 where role_id = #{0}
+  </update>
+
+  <select id="selectRoleName" parameterType="int" resultType="java.util.Map">
+    SELECT role_name from role where role_id = #{0}
+  </select>
+
+  <!-- 查询全部权限 -->
+  <select id="selectTitle" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT title_id,title_name from title where title_delete=1
+  </select>
+
+  <!-- 查询角色对应权限 -->
+  <select id="selectRoleTitle" parameterType="int" resultType="java.util.Map">
+    SELECT title_id from rolerelation where role_id=#{0}
+  </select>
+
+  <insert id="insertRoleTitle" parameterType="java.util.Map">
+    insert into rolerelation(role_id,title_id) VALUES(#{role_id},#{title_id})
+  </insert>
+</mapper>

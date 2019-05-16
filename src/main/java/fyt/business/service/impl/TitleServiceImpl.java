@@ -63,13 +63,14 @@ public class TitleServiceImpl implements TitleService
     }
 
     @Override
-    public int updataTitle(Map<String, Object> paraMap) {
+    public int updateTitle(Map<String, Object> paraMap) {
         return mapper.updateTitle(paraMap);
     }
 
     @Override
     public int deleteTitle(int i) {
-        int end = mapper.deleteTitle(i);
+        int end = 0;
+        end = mapper.deleteTitle(i);
         mapper.deleteTitleMenu(i);
         return end;
     }
@@ -88,7 +89,6 @@ public class TitleServiceImpl implements TitleService
             map.put("SubmenuList",mapper.selectSubmenuAll(menu_id));
         }
         return list;
-
     }
 
     @Override
