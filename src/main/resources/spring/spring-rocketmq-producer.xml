@@ -4,6 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                         http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
                         ">
+    <!--
     <bean id="userProducer" class="fyt.business.core.manager.rocketmq.user.UserProducer"
           init-method="init" destroy-method="destroy">
         <property name="producerGroup" value="${rocketmq.producerGroup}"/>
@@ -19,4 +20,5 @@
         <property name="topic" value="${rocketmq.trans.topic}"/>
         <property name="tags" value="${rocketmq.trans.tags}"/>
     </bean>
+    -->
 </beans>
